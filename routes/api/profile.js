@@ -32,10 +32,7 @@ router.get('/me', auth, async (req, res) => {
 // @desc    Create or update user profile
 // @access  Private
 router.post('/', [auth, [
-    check('status', 'Status is required')
-        .not()
-        .isEmpty(),
-    check('skills', 'Skills is required')
+    check('bio', 'Bio is required')
         .not()
         .isEmpty()
     ]],
@@ -48,40 +45,17 @@ router.post('/', [auth, [
         }
         // deconstruct the request object payload into corresponding fields
         const {
-            company,
-            website,
-            location,
+            followers,
             bio,
-            status,
-            githubusername,
-            skills,
-            youtube,
-            twitter,
-            instagram,
-            linkedin,
-            facebook
+            reviews
         } = req.body;
 
         // build the profile object based on the fields passed into the request
         const profileFields = {};
         profileFields.user = req.user.id;
-        if(company) profileFields.company = company;
-        if(website) profileFields.website = website;
-        if(location) profileFields.location = location;
-        if(bio) profileFields.bio = bio;
-        if(status) profileFields.status = status;
-        if(githubusername) profileFields.githubusername = githubusername;
-        if(skills) {
-            profileFields.skills = skills.split(',').map(skill => skill.trim());
-        }
-
-        // build social object of the profileFields object
-        profileFields.social = {};
-        if(youtube) profileFields.social.youtube = youtube;
-        if(twitter) profileFields.social.twitter = twitter;
-        if(facebook) profileFields.social.facebook = facebook;
-        if(linkedin) profileFields.social.linkedin = linkedin;
-        if(instagram) profileFields.social.instagram = instagram;
+        profileFields.followers = followers;
+        profileFields.bio = bio;
+        profileFields.reviews = reviews;
 
         try {
             // search the database for a profile with the current user id from the token
@@ -148,6 +122,23 @@ router.get('/user/:user_id', async (req, res) => {
         if (error.kind == 'ObjectID') {
             return res.status(400).json({msg: 'Profile not found'});
         }
+        res.status(500).send('Server error');
+    }
+});
+
+// @route   DELETE api/profile
+// @desc    Delete profile and corresponding user
+// @access  Private
+router.delete('/', auth, async (req, res) => {
+    try {
+        //Remove profile
+        await Profile.findOneAndRemove({user: req.user.id});
+
+        //Remove user
+        await User.findOneAndRemove({_id: req.user.id});
+        res.json({msg: 'User deleted'});
+    } catch (error) {
+        console.error(error.message);
         res.status(500).send('Server error');
     }
 });
