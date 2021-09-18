@@ -2,10 +2,10 @@
   "name": "socialnetwork",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "backend/server.js",
   "scripts": {
-    "start" : "node server",
-    "server": "nodemon server"
+    "start" : "node backend/server",
+    "server": "nodemon backend/server"
   },
   "author": "",
   "license": "MIT",
