@@ -9,12 +9,13 @@ connectDB();
 // Init Middleware
 app.use(express.json({extended: false}))
 
+// Main route
 app.get('/', (req, res) => res.send('API running'));
 
 // Define routes
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/profile', require('./routes/api/profile'));
+app.use('/api/users', require('./routes/api/users'));       // Route for registering user (pass in name, email, password --> creates user entry in database on success and returns token)
+app.use('/api/auth', require('./routes/api/auth'));         // Route for authenticating user (pass in email and password --> either authenticates or not and returns token)
+app.use('/api/profile', require('./routes/api/profile'));   // Route for creating a new profile or viewing your own profile (/me)
 app.use('/api/posts', require('./routes/api/posts'));
 
 const PORT = process.env.PORT || 5000;
