@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Axios from "axios";
 
 function App() {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const register = () => {
+    Axios.post('http://localhost:6969/api/users', {
+      name: name,
+      email: email,
+      password: password,
+    }).then((response) => {
+      console.log('App: ', response);
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <div className='registration'>
+        <h1>Register</h1>
+        <div>
+          <label>Name</label>
+          <input type='text'
+                 onChange={(e) => {setName(e.target.value)}}/>
+        </div>
+        <div>
+          <label>Email</label>
+          <input type='text'
+                 onChange={(e) => {setEmail(e.target.value)}}/>
+        </div>
+        <div>
+          <label>Password</label>
+          <input type='text'
+                 onChange={(e) => {setPassword(e.target.value)}}/>
+          <button onClick={register}>Submit</button>
+        </div>
+      </div>
     </div>
   );
 }
