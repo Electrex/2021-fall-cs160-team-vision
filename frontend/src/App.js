@@ -1,42 +1,101 @@
 import React, { useState } from 'react';
-import Axios from "axios";
+import axios from 'axios';
 
 function App() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
 
-  const register = () => {
-    Axios.post('http://localhost:6969/api/users', {
-      name: name,
-      email: email,
-      password: password,
-    }).then((response) => {
-      console.log('App: ', response);
-    });
+  const initialState = {
+    name: '',
+    email: '',
+    password: '',
+    password2: ''
+  };
+
+  const clearState = () => {
+    setEmail(initialState.email);
+    setName(initialState.name);
+    setPassword(initialState.password);
+    setPassword2(initialState.password2);
+  };
+
+  const register = async (e) => {
+    e.preventDefault();
+    if (password !== password2) {
+      console.log('Passwords do not match')
+    } else {
+      const newUser = {
+        name,
+        email,
+        password
+      }
+
+      try {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+
+        const body = JSON.stringify(newUser);
+
+        const res = await axios.post('/api/users', body, config);
+        clearState();
+        console.log(res.data);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    }
   };
 
   return (
     <div className='App'>
-      <div className='registration'>
+      <form className='registration' onSubmit={e => register(e)}>
         <h1>Register</h1>
         <div>
-          <label>Name</label>
-          <input type='text'
-                 onChange={(e) => {setName(e.target.value)}}/>
+          <input
+            type='text'
+            placeholder='Name'
+            name='name'
+            value={name}
+            onChange={(e) => {setName(e.target.value)}}
+            required
+          />
         </div>
         <div>
-          <label>Email</label>
-          <input type='text'
-                 onChange={(e) => {setEmail(e.target.value)}}/>
+          <input
+            type='text'
+            placeholder='Email Address'
+            name='email'
+            value={email}
+            onChange={(e) => {setEmail(e.target.value)}}
+            required
+          />
         </div>
         <div>
-          <label>Password</label>
-          <input type='text'
-                 onChange={(e) => {setPassword(e.target.value)}}/>
+          <input
+            type='password'
+            placeholder='Password'
+            name='password'
+            value={password}
+            minLength='6'
+            onChange={(e) => {setPassword(e.target.value)}}
+            />
         </div>
-        <button onClick={register}>Submit</button>
-      </div>
+        <div>
+          <input
+            type='password'
+            placeholder='Confirm Password'
+            name='password2'
+            value={password2}
+            minLength='6'
+            onChange={(e) => {setPassword2(e.target.value)}}
+            />
+        </div>
+        <input type='submit' className='btn btn-primary' value='Submit' />
+      </form>
     </div>
   );
 }
