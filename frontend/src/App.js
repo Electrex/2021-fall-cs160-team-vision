@@ -34,8 +34,8 @@ function App() {
           <label>Password</label>
           <input type='text'
                  onChange={(e) => {setPassword(e.target.value)}}/>
-          <button onClick={register}>Submit</button>
         </div>
+        <button onClick={register}>Submit</button>
       </div>
     </div>
   );
