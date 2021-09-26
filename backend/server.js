@@ -1,5 +1,6 @@
 const express = require('express');
 const connectDB = require('../database/db');
+const cors = require('cors')
 
 const app = express();
 
@@ -7,6 +8,10 @@ const app = express();
 connectDB();
 
 // Init Middleware
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
+
 app.use(express.json({extended: false}))
 
 // Main route
