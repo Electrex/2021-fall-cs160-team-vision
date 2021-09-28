@@ -24,7 +24,7 @@ function UserLanding(props){
     return (
         <div>
             <h1>
-                {json.user}
+                You are a user maybe 
             </h1>
         </div>
     )
