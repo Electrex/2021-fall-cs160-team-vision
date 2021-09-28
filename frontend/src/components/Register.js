@@ -44,6 +44,7 @@ function Register(props) {
         const res = await axios.post('/api/users', body, config);
         clearState();
         console.log(res.data);
+        localStorage.setItem('agora_token', res.data.token)
       } catch (error) {
         console.log(error.response.data);
       }
