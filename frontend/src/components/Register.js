@@ -43,17 +43,34 @@ function Register(props) {
 
         const res = await axios.post('/api/users', body, config);
         clearState();
+        if (res.status === 400 || res.status === 500){
+          return null
+        }
         console.log(res.data);
         localStorage.setItem('agora_token', res.data.token)
+        return res.data.token
       } catch (error) {
         console.log(error.response.data);
+        return null
       }
     }
   };
 
+  const handleRegister = async (e) => {
+    if (await register(e)){
+      props.history.push('/me')
+    }
+    else{
+      setEmail(initialState.email);
+      setName(initialState.name);
+      setPassword(initialState.password);
+      setPassword2(initialState.password2);
+    }
+  }
+
   return (
     <div className='App'>
-      <form className='registration' onSubmit={e => register(e).then(props.history.push('/me'))}>
+      <form className='registration' onSubmit={e => handleRegister(e)}>
         <h1>Register</h1>
         <div>
           <input
