@@ -8,28 +8,22 @@ const ProfileSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    followers: {
-      type: Number,
-      default: 0
-    },
+    followers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+      }
+    ],
+    following: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+      }
+    ],
     reviews: [
       {
-        title: {
-          type: String,
-          required: true
-        },
-        description: {
-          type: String,
-          required: true
-        },
-        link: {
-          type: String,
-          required: true
-        },
-        image: {
-          type: String,
-          required: true
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'review'
       }
     ]
 });

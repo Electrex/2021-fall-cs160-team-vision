@@ -18,7 +18,7 @@ const profile = async (token) =>{
 }
 
 function UserLanding(props){
-    const token = localStorage.getItem('agora_token')
+    const token = sessionStorage.getItem('agora_token')
     const json = profile(token)
 
     return (
