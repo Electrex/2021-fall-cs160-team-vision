@@ -5,6 +5,7 @@ const {check, validationResult} = require('express-validator');
 
 const Profile = require('../../../database/models/Profile');
 const User = require('../../../database/models/User');
+const Review = require('../../../database/models/Review');
 
 // @route   GET api/profile/me
 // @desc    Get current user's profile
