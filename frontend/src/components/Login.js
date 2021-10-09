@@ -28,7 +28,7 @@ function Login(props) {
 
         try {
             const body = JSON.stringify(loginAttempt)
-            const result = await axios.post('/api/auth', body);
+            const result = await axios.post('/api/auth', body); // Authenticate email and password
             if (result.status === 400 || result.status === 500) {
                 return null
             }
@@ -40,6 +40,8 @@ function Login(props) {
         }
     }
 
+    // Set page state depending on login success
+    // TODO: pass user information into next page? Not sure if that is required
     const handleLogin = async (e) => {
         if (await login(e)) {
             props.history.push('/me')
