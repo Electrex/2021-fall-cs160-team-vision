@@ -4,6 +4,7 @@ const auth = require('../../middleware/auth');
 const {check, validationResult} = require('express-validator');
 
 const Review = require('../../../database/models/Review');
+const Profile = require('../../../database/models/Profile');
 
 // @route   POST api/review
 // @desc    Create a new review
@@ -18,7 +19,7 @@ router.post('/', [auth, [
     check('link', 'Link is required')
         .not()
         .isEmpty(),
-    check('image', 'Image link is required')
+    check('imageURL', 'Image link is required')
         .not()
         .isEmpty()
     ]],
@@ -34,7 +35,7 @@ router.post('/', [auth, [
             title,
             description,
             link,
-            image
+            imageURL
         } = req.body;
 
         // build the review object based on the fields passed into the request
@@ -43,13 +44,17 @@ router.post('/', [auth, [
         reviewFields.title = title;
         reviewFields.description = description;
         reviewFields.link = link;
-        reviewFields.image = image;
+        reviewFields.imageURL = imageURL;
 
         try {
             // Create new review with the fields and save it in the database
             review = new Review(reviewFields);
             await review.save();
-            
+
+            const profile = await Profile.findOne({ user: req.user.id });
+            profile.reviews.push(review);
+            await profile.save();
+
             return res.send(review);
 
         } catch (error) {
@@ -101,14 +106,18 @@ router.get('/user/:user_id', async (req, res) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
     try {
-        //Remove profile
+        //Remove review
         await Review.findOneAndRemove({user: req.user.id, _id: req.params.review_id});
 
-        //Remove user
-        await User.findOneAndRemove({_id: req.user.id});
+        const profile = await Profile.findOne({ user: req.user.id });
+        profile.reviews.pull({ _id: req.params.review_id });
+        await profile.save();
+
         res.json({msg: 'User deleted'});
     } catch (error) {
         console.error(error.message);
         res.status(500).send('Server error');
     }
 });
+
+module.exports = router

@@ -13,8 +13,11 @@ const Review = require('../../../database/models/Review');
 router.get('/me', auth, async (req, res) => {
     try {
         // Search the database for a profile with the user containing the user id, populate the user field (with only the name and avatar)
-        const profile = await Profile.findOne({ user: req.user.id }).populate('user', 
-        ['name', 'avatar']);
+        const profile = await Profile.findOne({ user: req.user.id })
+            .populate('user', ['name', 'avatar'])
+            .populate('followers')
+            .populate('following')
+            .populate('reviews');
 
         // If there is no profile found with this user id, error
         if(!profile) {
@@ -71,6 +74,8 @@ router.post('/', [auth, [
                 );
 
                 // return the newly updated profile as the response
+                // res.header("Content-Type",'application/json');
+                // res.send(JSON.stringify(profiles, null, 4));
                 return res.json(profile);
             }
 
@@ -94,7 +99,13 @@ router.post('/', [auth, [
 // @access  Public
 router.get('/', async (req, res) => {
     try {
-        const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+        const profiles = await Profile.find()
+            .populate('user', ['name', 'avatar'])
+            .populate('followers')
+            .populate('following')
+            .populate('reviews');
+        // res.header("Content-Type",'application/json');
+        // res.send(JSON.stringify(profiles, null, 4));
         res.json(profiles);
     } catch (error) {
         console.error(error.message);
@@ -109,7 +120,11 @@ router.get('/', async (req, res) => {
 router.get('/user/:user_id', async (req, res) => {
     try {
         // search database for a profile with the given user_id
-        const profile = await Profile.findOne({user: req.params.user_id}).populate('user', ['name', 'avatar']);
+        const profile = await Profile.findOne({user: req.params.user_id})
+            .populate('user', ['name', 'avatar'])
+            .populate('followers')
+            .populate('following')
+            .populate('reviews');
         
         // If there is no such user, then return an error response since that user doesn't exist
         if (!profile) {

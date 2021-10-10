@@ -21,6 +21,7 @@ app.get('/', (req, res) => res.send('API running'));
 app.use('/api/users', require('./routes/api/users'));       // Route for registering user (pass in name, email, password --> creates user entry in database on success and returns token)
 app.use('/api/auth', require('./routes/api/auth'));         // Route for authenticating user (pass in email and password --> either authenticates or not and returns token)
 app.use('/api/profile', require('./routes/api/profile'));   // Route for creating a new profile or viewing your own profile (/me)
+app.use('/api/review', require('./routes/api/review'));     // Route for creating/viewing/deleting reviews
 
 const PORT = process.env.PORT || 6969;
 
