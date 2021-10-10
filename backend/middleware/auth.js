@@ -11,7 +11,7 @@ module.exports = function(req, res, next) {
     }
 
     try {
-        // Decide the token with the secret
+        // Decode the token with the secret
         const decoded = jwt.verify(token, config.get('jwtSecret'));
 
         // if the token is verified, add a new user object to the request, and assign it the decoded user from the token

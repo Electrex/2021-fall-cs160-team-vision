@@ -11,13 +11,15 @@ const ProfileSchema = new mongoose.Schema({
     followers: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'user',
+        default: null
       }
     ],
     following: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'user',
+        default: null
       }
     ],
     reviews: [
