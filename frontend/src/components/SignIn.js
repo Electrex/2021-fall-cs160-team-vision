@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-function Login(props) {
+function SignIn(props) {
     const history = useHistory();
 
     return (
         <div className='Container'>
-            <h1>Login</h1>
-
+            <h1>SignIn</h1>
+            <p>Add implementation</p>
         </div>
     );
 }
 
-export default Login;
+export default SignIn;
