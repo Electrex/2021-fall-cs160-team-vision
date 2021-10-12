@@ -27,11 +27,17 @@ function Login(props) {
         }
 
         try {
+            const config = {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              }
             const body = JSON.stringify(loginAttempt)
-            const result = await axios.post('/api/auth', body); // Authenticate email and password
+            const result = await axios.post('/api/auth', body, config); // Authenticate email and password
             if (result.status === 400 || result.status === 500) {
                 return null
             }
+            sessionStorage.setItem('agora_token', result.data.token)
             console.log(result.data);
             return result.data
         } catch (error) {
