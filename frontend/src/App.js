@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import CreateReview from './components/CreateReview';
 import LandingPage from './components/LandingPage';
 import ManageReview from "./components/ManageReview";
-import SignIn from './components/SignIn';
+import Login from './components/Login';
 import Register from './components/Register';
 import UserLanding from './components/UserLanding';
 import UserList from './components/UserList';
@@ -17,7 +17,7 @@ function App(){
           <Route path='/me' exact component={UserLanding}/>
           <Route path='/me/reviews' exact compoenent={ManageReview}/>
           <Route path='/me/reviews/add' exact compoenent={CreateReview}/>
-          <Route path='/signin' exact component={SignIn}/>
+          <Route path='/signin' exact component={Login}/>
           <Route path='/signup' exact component={Register}/>
           <Route path='/users' exact component={UserList}/>
         </Switch>
