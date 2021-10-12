@@ -6,6 +6,7 @@ import CreateReview from "./CreateReview";
 import SignIn from "./SignIn";
 import Register from "./Register";
 import UserList from "./UserList";
+import Profile from './Profile';
 
 function LandingPage(props) {
     const history = useHistory();
@@ -31,6 +32,7 @@ function LandingPage(props) {
             <button onClick={() => routeChange('/signin')}>SignIn</button>
             <button onClick={() => routeChange('/signup')}>Register</button>
             <button onClick={() => routeChange('/users')}>UserList</button>
+            <button onClick={() => routeChange('/profile')}>Profile</button>
 
         </div>
     );
