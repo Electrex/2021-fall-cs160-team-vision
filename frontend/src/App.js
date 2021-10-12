@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import UserLanding from './components/UserLanding';
 import UserList from './components/UserList';
+import Profile from './components/Profile';
 
 function App(){
   return(
@@ -20,6 +21,7 @@ function App(){
           <Route path='/signin' exact component={Login}/>
           <Route path='/signup' exact component={Register}/>
           <Route path='/users' exact component={UserList}/>
+          <Route path='/profile' exact component={Profile}/>
         </Switch>
       </main>
     </BrowserRouter>
