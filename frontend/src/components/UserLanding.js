@@ -23,10 +23,9 @@ function UserLanding(props){
     const token = sessionStorage.getItem('agora_token');
     const json =  profile(token);
     const [query, setQuery] = useState('');
-    console.log(followers)
 
     const handleSearch = (query) => {
-        history.pushState(`/users`);
+        history.push(`/users`);
     }
 
     return (
