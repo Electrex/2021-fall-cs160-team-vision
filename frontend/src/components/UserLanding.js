@@ -25,7 +25,7 @@ function UserLanding(props){
     const [query, setQuery] = useState('');
 
     const handleSearch = (query) => {
-        history.push(`/users`);
+        history.push(`/users?q=${query}`);
     }
 
     return (
