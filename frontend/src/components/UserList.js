@@ -16,7 +16,7 @@ function UserList(props) {
             <div>
             <input
                 type='text'
-                placeholder='Search for new User'
+                placeholder='Search for User'
                 name='query'
                 value={query}
                 onChange={(e) => {setQuery(e.target.value)}}
