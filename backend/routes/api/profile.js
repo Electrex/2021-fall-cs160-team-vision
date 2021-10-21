@@ -32,6 +32,54 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
+// @route   POST api/profile/byname
+// @desc    Returns all profiles who have names which match or contain the searched-for name as a substring
+// @access  Public
+router.post('/byname', [
+        check('name', 'Name is required')
+            .not()
+            .isEmpty()
+    ], 
+    async (req, res) => {
+        // validate name is not empty
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            return res.status(400).json({errors: errors.array()});
+        }
+        
+        // deconstruct body of post into the name field
+        var {name} = req.body;
+
+        // strip punctuation
+        var punctuationless = name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+        //remove extra whitespace leftover
+        name = punctuationless.replace(/\s{2,}/g," ");
+
+        // split name by 1 or more whitepaces
+        var namearr = name.split(/\s+/);
+        console.log(namearr);
+
+        try {
+            let profiles = await Profile.find()
+                .populate('user', ['name', 'avatar'])
+                .populate('followers')
+                .populate('following')
+                .populate('reviews');
+
+            profiles = profiles.filter(function(profile) {
+                // console.log(profile);
+                return namearr.some(substring=>profile.user.name.includes(substring)); // return only profiles with names containing the substring
+            });
+
+            return res.json(profiles);
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send('Server error');
+        }
+    }
+);
+
+
 // @route   POST api/profile
 // @desc    Create or update user profile
 // @access  Private
