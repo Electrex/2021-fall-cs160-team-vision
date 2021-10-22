@@ -20,7 +20,7 @@ function App(){
           <Route path='/me/reviews/add' exact compoenent={CreateReview}/>
           <Route path='/signin' exact component={Login}/>
           <Route path='/signup' exact component={Register}/>
-          <Route path='/users' exact component={UserList}/>
+          <Route path='/users' component={UserList}/>
           <Route path='/profile' exact component={Profile}/>
         </Switch>
       </main>

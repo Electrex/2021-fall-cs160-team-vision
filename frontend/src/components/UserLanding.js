@@ -25,7 +25,7 @@ function UserLanding(props){
     const [query, setQuery] = useState('');
 
     const handleSearch = (query) => {
-        history.push(`/users`);
+        history.push(`/users?${query}`);
     }
 
     return (
@@ -33,7 +33,7 @@ function UserLanding(props){
         <div>
             <input
             type='text'
-            placeholder='Search for new User'
+            placeholder='Search for User'
             name='query'
             value={query}
             onChange={(e) => {setQuery(e.target.value)}}
