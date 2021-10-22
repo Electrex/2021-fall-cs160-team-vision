@@ -14,13 +14,29 @@ const search = async (q) => {
 
         const res = await axios.post('/api/profile/byname', body, config);
         if (res.status === 400 || res.status === 500){
-          return {};
+          return [];
         }
         console.log(res.data);
         return res.data;
       } catch (error) {
         console.log(error.response.data);
-        return {};
+        return [];
+      }
+}
+
+const fullList = async () => {
+    try {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
+        const res = await axios.get('/api/profile', config);
+        console.log(res.data);
+        return res.data;
+      } catch (error) {
+        console.log(error.response.data);
+        return [];
       }
 }
 
@@ -28,19 +44,21 @@ function UserList(props) {
     const history = useHistory();
     const [query, setQuery] = useState('');
     const searchQuery = props.location.search.substring(1)
-    // const searchResult = search(searchQuery)
-
-    const handleSearch = (query) => {
-        history.push(`/users?${query}`);
+    var searchResult = [];
+    var rows = [];
+    if (searchQuery.length == 0){
+        searchResult = fullList()
+    }
+    else{
+        searchResult = search(searchQuery)
     }
 
-    var rows = [];
-    for (let i =0; i < 10; i++){
+    for (let i = 0; i < searchResult.length; i++){
         rows.push((
             <tr>
-                <td>User {i}</td>
-                <td>{100*i + 3*i*i}</td>
-                <td>{i*5}</td>
+                <td>searchResult[i].user</td>
+                <td>searchResult[i].followers.length</td>
+                <td>searchResult[i].reviews.length</td>
                 <td><button>Follow</button></td>
                 <td><button>View Profile</button></td>
             </tr>
@@ -51,7 +69,7 @@ function UserList(props) {
         <table>
             <thead>
                 <tr>
-                    <th>User Name</th>
+                    <th>Name</th>
                     <th>Followers</th>
                     <th>Reviews</th>
                     <th></th>
@@ -61,6 +79,10 @@ function UserList(props) {
             <tbody>{rows}</tbody>
         </table>
     );
+    
+    const handleSearch = (query) => {
+        history.push(`/users?${query}`);
+    }
 
     return (
         <div className='Container'>
