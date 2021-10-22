@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -43,27 +43,35 @@ const fullList = async () => {
 function UserList(props) {
     const history = useHistory();
     const [query, setQuery] = useState('');
+    const [displayRows, setRows] = useState([]);
     const searchQuery = props.location.search.substring(1)
-    var searchResult = [];
     var rows = [];
-    if (searchQuery.length == 0){
-        searchResult = fullList()
-    }
-    else{
-        searchResult = search(searchQuery)
-    }
-
-    for (let i = 0; i < searchResult.length; i++){
-        rows.push((
-            <tr>
-                <td>searchResult[i].user</td>
-                <td>searchResult[i].followers.length</td>
-                <td>searchResult[i].reviews.length</td>
-                <td><button>Follow</button></td>
-                <td><button>View Profile</button></td>
-            </tr>
-        ))
-    }
+    
+    useEffect(() => {
+        const fetchData = async () =>{
+            var searchResult = [];
+            if (searchQuery.length == 0){
+                searchResult = await fullList()
+            }
+            else{
+                searchResult = await search(searchQuery)
+            }
+        
+            for (let i = 0; i < searchResult.length; i++){
+                rows.push((
+                    <tr key = {i}>
+                        <td>{searchResult[i].user.name}</td>
+                        <td>{searchResult[i].followers.length}</td>
+                        <td>{searchResult[i].reviews.length}</td>
+                        <td><button>Follow</button></td>
+                        <td><button>View Profile</button></td>
+                    </tr>
+                ))
+            }
+            setRows(rows)
+        }
+        fetchData();
+    }, []);
 
     const table = (
         <table>
@@ -76,12 +84,13 @@ function UserList(props) {
                     <th></th>
                 </tr>
             </thead>
-            <tbody>{rows}</tbody>
+            <tbody>{displayRows}</tbody>
         </table>
     );
     
     const handleSearch = (query) => {
         history.push(`/users?${query}`);
+        window.location.reload(false);
     }
 
     return (

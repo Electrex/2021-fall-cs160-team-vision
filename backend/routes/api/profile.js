@@ -57,7 +57,6 @@ router.post('/byname', [
 
         // split name by 1 or more whitepaces
         var namearr = name.split(/\s+/);
-        console.log(namearr);
 
         try {
             let profiles = await Profile.find()
