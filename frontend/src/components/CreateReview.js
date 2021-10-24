@@ -7,7 +7,7 @@ function CreateReview(props) {
     // const history = useHistory();
 
     //create review object according to backend api
-    const createReview = (title, image, description, link) => {
+    const createReview = (title, description, link, image) => {
         return {title: title, description: description, link: link, imageURL: image}
     }
 
