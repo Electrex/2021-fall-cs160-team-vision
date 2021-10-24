@@ -31,9 +31,7 @@ function CreateReview(props) {
     //construct JSON from review object and send it to /api/review
     const postReview = async (event) => {
         event.preventDefault()
-        const submitAttempt = {
-            title,description, link, imageURL
-        }
+        const submitAttempt = createReview(title,description, link, imageURL)
         try {
             //const token = sessionStorage.getItem('agora_token');
             const config = {
