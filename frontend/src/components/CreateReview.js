@@ -107,7 +107,7 @@ function CreateReview(props) {
                     type='image'
                     placeholder='My image URL'
                     name='image'
-                    value={image}
+                    value={imageURL}
                     onChange={event => {setImage(event.target.value)}}
                     required
                 />
