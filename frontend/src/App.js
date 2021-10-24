@@ -16,8 +16,8 @@ function App(){
         <Switch>
           <Route path='/' exact component={LandingPage}/>
           <Route path='/me' exact component={UserLanding}/>
-          <Route path='/me/reviews' exact compoenent={ManageReview}/>
-          <Route path='/me/reviews/add' exact compoenent={CreateReview}/>
+          <Route path='/me/reviews' exact component={ManageReview}/>
+          <Route path='/me/reviews/add' exact component={CreateReview}/>
           <Route path='/signin' exact component={Login}/>
           <Route path='/signup' exact component={Register}/>
           <Route path='/users' component={UserList}/>
