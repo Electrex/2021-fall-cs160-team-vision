@@ -66,7 +66,7 @@ function CreateReview(props) {
             <form onSubmit={event => submitReview(event)}>
                 <label for='link'>
                     Add a link to the product you are reviewing:
-                </label>
+                </label><br />
                 <input 
                     type='url'
                     placeholder='Product Page Hyperlink'
@@ -74,10 +74,10 @@ function CreateReview(props) {
                     value={link}
                     onChange={event => {setLink(event.target.value)}}
                     required
-                />
+                /><br />
                 <label for='title'>
                     What is the title of your review?
-                </label>
+                </label><br />
                 <input 
                     type='text'
                     placeholder='My Review'
@@ -85,9 +85,9 @@ function CreateReview(props) {
                     value={title}
                     onChange={event => {setTitle(event.target.value)}}
                     required
-                />
+                /><br />
                 <label for='desc'>
-                    Enter your review here:
+                    Enter your review here:</label> <br />
                 <textarea
                     type='text'
                     placeholder='What is your opinion on the product?'
@@ -96,18 +96,18 @@ function CreateReview(props) {
                     onChange={event => {setDesc(event.target.value)}}
                     required
                 />
-                </label>
+                <br />
                 <label for='image'>
                     Add image URL here:
-                </label>
+                </label><br />
                 <input 
-                    type='image'
+                    type='url'
                     placeholder='My image URL'
                     name='image'
                     value={imageURL}
                     onChange={event => {setImage(event.target.value)}}
                     required
-                />
+                /><br />
                 <input type='submit' className='btn btn-primary' value='Submit' />
             </form>
         </div>
