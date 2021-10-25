@@ -45,6 +45,7 @@ function CreateReview(props) {
                 return null
             }
             console.log(result.data);
+            alert('Review Submitted!');
             return result.data;
         } catch(error){
             console.log(error.response.data)
