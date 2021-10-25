@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 //import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-//import e from 'express';
 
 function CreateReview(props) {
     // const history = useHistory();
@@ -9,7 +8,7 @@ function CreateReview(props) {
     //create review object according to backend api
     const createReview = (title, description, link, image) => {
         return {title: title, description: description, link: link, imageURL: image}
-    }
+    };
 
     //establish hooks
     const [title, setTitle] = useState('');
@@ -31,7 +30,7 @@ function CreateReview(props) {
     //construct JSON from review object and send it to /api/review
     const postReview = async (event) => {
         event.preventDefault()
-        const submitAttempt = createReview(title,description, link, imageURL);
+        const submitAttempt = createReview(title,description, link, imageURL)
         try {
             //const token = sessionStorage.getItem('agora_token');
             const config = {
@@ -53,9 +52,9 @@ function CreateReview(props) {
         }
     }
 
-    const submitReview = async (event) => {
+    const submitReview = (event) => {
         if (await postReview(event)){
-            props.history.push('/me/reviews');
+            props.history.push('/me');
             alert('Review Submitted!');
         } else {
             clearState()
@@ -66,8 +65,8 @@ function CreateReview(props) {
             <h1>Create your review here!</h1>
             <form onSubmit={event => submitReview(event)}>
                 <label for='link'>
-                    Add a link to the product you are reviewing (Including the http:// or https://)&nbsp;
-                </label><br />
+                    Add a link to the product you are reviewing:
+                </label>
                 <input 
                     type='url'
                     placeholder='Product Page Hyperlink'
@@ -75,10 +74,10 @@ function CreateReview(props) {
                     value={link}
                     onChange={event => {setLink(event.target.value)}}
                     required
-                /><br/>
+                />
                 <label for='title'>
-                    What is the title of your review?&nbsp;
-                </label><br/>
+                    What is the title of your review?
+                </label>
                 <input 
                     type='text'
                     placeholder='My Review'
@@ -86,9 +85,9 @@ function CreateReview(props) {
                     value={title}
                     onChange={event => {setTitle(event.target.value)}}
                     required
-                /><br/>
+                />
                 <label for='desc'>
-                    Enter your review here:&nbsp;</label><br/>
+                    Enter your review here:
                 <textarea
                     type='text'
                     placeholder='What is your opinion on the product?'
@@ -96,18 +95,19 @@ function CreateReview(props) {
                     value={description}
                     onChange={event => {setDesc(event.target.value)}}
                     required
-                /><br/>
+                />
+                </label>
                 <label for='image'>
-                    Add image URL here (Including the http:// or https://): &nbsp;
+                    Add image URL here:
                 </label>
                 <input 
-                    type='url'
+                    type='image'
                     placeholder='My image URL'
                     name='image'
                     value={imageURL}
                     onChange={event => {setImage(event.target.value)}}
                     required
-                /><br/>
+                />
                 <input type='submit' className='btn btn-primary' value='Submit' />
             </form>
         </div>
