@@ -52,9 +52,9 @@ function CreateReview(props) {
         }
     }
 
-    const submitReview = (event) => {
+    const submitReview = async (event) => {
         if (await postReview(event)){
-            props.history.push('/me');
+            props.history.push('/me/reviews');
             alert('Review Submitted!');
         } else {
             clearState()
