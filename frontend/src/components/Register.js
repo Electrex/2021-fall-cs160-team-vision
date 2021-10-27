@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import axios from 'axios';
+
+import './style.css';
 
 function Register(props) {
   const [email, setEmail] = useState('');
@@ -103,55 +106,99 @@ function Register(props) {
       setName(initialState.name);
       setPassword(initialState.password);
       setPassword2(initialState.password2);
+      alert('An issue occurred, please try again.')
     }
   }
 
   return (
     <div className='App'>
-      <form className='registration' onSubmit={e => handleRegister(e)}>
-        <h1>Register</h1>
-        <div>
-          <input
-            type='text'
-            placeholder='Name'
-            name='name'
-            value={name}
-            onChange={(e) => {setName(e.target.value)}}
-            required
-          />
+      <div className='appAside' />
+      <div className='appForm'>
+        <div className='pageSwitcher'>
+          <NavLink
+            to="/signin"
+            activeClassName="pageSwitcherItem-active"
+            className="pageSwitcherItem"
+          >
+            Sign In
+          </NavLink>
+          <NavLink
+            to="/signup"
+            activeClassName="pageSwitcherItem-active"
+            className="pageSwitcherItem"
+          >
+            Sign Up
+          </NavLink>
         </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Email Address'
-            name='email'
-            value={email}
-            onChange={(e) => {setEmail(e.target.value)}}
-            required
-          />
+
+        <div className='formCenter'>
+          <form className='formFields' onSubmit={ event => handleRegister(event) }>
+            <div className='formField'>
+              <label className='formFieldLabel'>
+              Name
+              </label>
+              <input
+              type='text'
+              className='formFieldInput'
+              placeholder='Enter your name'
+              name='name'
+              value={ name }
+              onChange={ (event) => {setName(event.target.value)} }
+              />
+            </div>
+
+            <div className='formField'>
+              <label className='formFieldLabel'>
+              E-Mail Address
+              </label>
+              <input
+              type='email'
+              className='formFieldInput'
+              placeholder='Enter your email'
+              name='email'
+              value={ email }
+              onChange={ (event) => {setEmail(event.target.value)} }
+              />
+            </div>
+
+            <div className='formField'>
+              <label className='formFieldLabel' htmlFor='email'>
+              Password
+              </label>
+              <input
+              type='password'
+              className='formFieldInput'
+              placeholder='Enter your password'
+              name='password'
+              value={ password }
+              onChange={ (event) => {setPassword(event.target.value)} }
+              />
+            </div>
+
+
+            <div className='formField'>
+              <label className='formFieldLabel' htmlFor='password'>
+              Confirm Password
+              </label>
+              <input
+              type='password'
+              className='formFieldInput'
+              placeholder='Confirm your password'
+              name='password2'
+              value={ password2 }
+              onChange={ (event) => {setPassword2(event.target.value)}}
+              />
+            </div>
+
+            <div className='formField'>
+              <button className='formFieldButton'>Sign In</button>
+              <Link to='/signup' className='formFieldLink'>
+                Create an account
+              </Link>
+            </div>
+          </form>
         </div>
-        <div>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            value={password}
-            minLength='6'
-            onChange={(e) => {setPassword(e.target.value)}}
-            />
-        </div>
-        <div>
-          <input
-            type='password'
-            placeholder='Confirm Password'
-            name='password2'
-            value={password2}
-            minLength='6'
-            onChange={(e) => {setPassword2(e.target.value)}}
-            />
-        </div>
-        <input type='submit' className='btn btn-primary' value='Submit' />
-      </form>
+      </div>
     </div>
   );
 }
