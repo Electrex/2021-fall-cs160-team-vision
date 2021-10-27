@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 function ManageReview(props) {
     const history = useHistory();
-
+    
     return (
         <div className='Container'>
             <h1>ManageReview</h1>
