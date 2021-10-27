@@ -116,9 +116,6 @@ function Login(props) {
 
                         <div className='formField'>
                             <button className='formFieldButton'>Sign In</button>
-                            <Link to='/signup' className='formFieldLink'>
-                                Create an account
-                            </Link>
                         </div>
                     </form>
                 </div>
