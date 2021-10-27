@@ -191,10 +191,7 @@ function Register(props) {
             </div>
 
             <div className='formField'>
-              <button className='formFieldButton'>Sign In</button>
-              <Link to='/signup' className='formFieldLink'>
-                Create an account
-              </Link>
+              <button className='formFieldButton'>Create an account</button>
             </div>
           </form>
         </div>
