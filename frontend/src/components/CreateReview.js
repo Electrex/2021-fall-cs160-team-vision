@@ -32,11 +32,11 @@ function CreateReview(props) {
         event.preventDefault()
         const submitAttempt = createReview(title,description, link, imageURL)
         try {
-            //const token = sessionStorage.getItem('agora_token');
+            const token = sessionStorage.getItem('agora_token');
             const config = {
                 headers: {
-                    'Content-Type': 'application/json'
-                    //'x-auth-token': token
+                    'Content-Type': 'application/json',
+                    'x-auth-token': token
                 }
             }
             const body = JSON.stringify(submitAttempt)
