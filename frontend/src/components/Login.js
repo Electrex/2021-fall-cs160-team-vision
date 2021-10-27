@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import axios from 'axios';
+
+import './style.css';
 
 function Login(props) {
     const [email, setEmail] = useState('');
@@ -48,43 +51,80 @@ function Login(props) {
 
     // Set page state depending on login success
     // TODO: pass user information into next page? Not sure if that is required
-    const handleLogin = async (e) => {
-        if (await login(e)) {
+    const handleLogin = async (event) => {
+        if (await login(event)) {
             props.history.push('/me')
         }
         else {
             setEmail(initialState.email);
             setPassword(initialState.password);
+            alert('Invalid Email or Password.')
         }
     }
 
     return (
-        <div>
-            <form className='login' onSubmit={e => handleLogin(e)}>
-                <h1>Login</h1>
-                <div>
-                    <input
-                        type='text'
-                        placeholder='Email Address'
-                        name='email'
-                        value={email}
-                        onChange={(e) => { setEmail(e.target.value) }}
-                        required
-                    />
+        <div className='App'>
+            <div className='appAside' />
+            <div className='appForm'>
+                <div className='pageSwitcher'>
+                    <NavLink
+                        to="/signin"
+                        activeClassName="pageSwitcherItem-active"
+                        className="pageSwitcherItem"
+                    >
+                        Sign In
+                    </NavLink>
+                    <NavLink
+                        to="/signup"
+                        activeClassName="pageSwitcherItem-active"
+                        className="pageSwitcherItem"
+                    >
+                        Sign Up
+                    </NavLink>
+            	</div>
+
+                <div className='formCenter'>
+                    <form className='formFields' onSubmit={ event => handleLogin(event) }>
+                        <div className='formField'>
+                            <label className='formFieldLabel' htmlFor='email'>
+                                E-Mail Address
+                            </label>
+                            <input
+                                type='email'
+                                className='formFieldInput'
+                                placeholder='Enter your email'
+                                name='email'
+                                value={ email }
+                                onChange={ (event) => {setEmail(event.target.value)} }
+                            />
+                        </div>
+
+
+                        <div className='formField'>
+                            <label className='formFieldLabel' htmlFor='password'>
+                                Password
+                            </label>
+                            <input
+                                type='password'
+                                className='formFieldInput'
+                                placeholder='Enter your password'
+                                name='password'
+                                value={ password }
+                                onChange={ (event) => {setPassword(event.target.value)}}
+                            />
+                        </div>
+
+                        <div className='formField'>
+                            <button className='formFieldButton'>Sign In</button>
+                            <Link to='/signup' className='formFieldLink'>
+                                Create an account
+                            </Link>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <input
-                        type='password'
-                        placeholder='Password'
-                        name='password'
-                        value={password}
-                        onChange={(e) => { setPassword(e.target.value) }}
-                        required
-                    />
-                </div>
-                <input type='submit' className='btn btn-primary' value='Submit' />
-            </form>
+            </div>
         </div>
+    
     )
 }
 
