@@ -68,7 +68,7 @@ router.post('/byname', [
 
             profiles = profiles.filter(function(profile) {
                 // console.log(profile);
-                return namearr.some(substring=>profile.user.name.includes(substring)); // return only profiles with names containing the substring
+                return namearr.some(substring=>profile.user.name.toUpperCase().includes(substring.toUpperCase())); // return only profiles with names containing the substring, case insensitive
             });
 
             return res.json(profiles);
