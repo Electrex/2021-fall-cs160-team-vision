@@ -51,12 +51,12 @@ function UserList(props) {
     const fetchData = async () =>{
         var res;
         if (searchQuery.length == 0){
-            searchResult = await fullList()
+            res = await fullList()
         }
         else{
-            searchResult = await search(searchQuery)
+            res = await search(searchQuery)
         }
-        //setSearchResult(res);
+        setSearchResult(res);
         for (let i = 0; i < searchResult.length; i++){
             rows.push((
                 <tr key = {i}>
