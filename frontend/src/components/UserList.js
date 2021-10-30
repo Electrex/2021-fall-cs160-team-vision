@@ -44,19 +44,24 @@ function UserList(props) {
     const history = useHistory();
     const [query, setQuery] = useState('');
     const [displayRows, setRows] = useState([]);
-    var [searchResult, setSearchResult] = useState([]);
+    let [searchResult, setSearchResult] = useState([]);
     const searchQuery = props.location.search.substring(1)
-    var rows = [];
+    let rows = [];
 
-    const fetchData = async () =>{
-        var res;
-        if (searchQuery.length == 0){
-            res = await fullList()
+    const fetchData = async () => {
+        let res;
+        if (searchQuery.length === 0) {
+            res = await fullList();
+        } 
+        else {
+            res = await search(searchQuery);
         }
-        else{
-            res = await search(searchQuery)
-        }
-        setSearchResult(res);
+        return res;
+    }
+
+    fetchData()
+    .then(response => {
+        setSearchResult(response)
         for (let i = 0; i < searchResult.length; i++){
             rows.push((
                 <tr key = {i}>
@@ -68,12 +73,9 @@ function UserList(props) {
                 </tr>
             ))
         }
-        setRows(rows)
-    }
-    
-    useEffect(() => {
-        fetchData();
-    }, []);
+        setRows(rows);
+    })
+
 
     const table = (
         <table>
