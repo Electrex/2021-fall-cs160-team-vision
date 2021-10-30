@@ -44,32 +44,34 @@ function UserList(props) {
     const history = useHistory();
     const [query, setQuery] = useState('');
     const [displayRows, setRows] = useState([]);
+    var [searchResult, setSearchResult] = useState([]);
     const searchQuery = props.location.search.substring(1)
     var rows = [];
+
+    const fetchData = async () =>{
+        var res;
+        if (searchQuery.length == 0){
+            searchResult = await fullList()
+        }
+        else{
+            searchResult = await search(searchQuery)
+        }
+        //setSearchResult(res);
+        for (let i = 0; i < searchResult.length; i++){
+            rows.push((
+                <tr key = {i}>
+                    <td>{searchResult[i].user.name}</td>
+                    <td>{searchResult[i].followers.length}</td>
+                    <td>{searchResult[i].reviews.length}</td>
+                    <td><button onClick={() => searchResult[i].followers.push(searchResult[i].user.id)}>Follow</button></td>
+                    <td><button>View Profile</button></td>
+                </tr>
+            ))
+        }
+        setRows(rows)
+    }
     
     useEffect(() => {
-        const fetchData = async () =>{
-            var searchResult = [];
-            if (searchQuery.length == 0){
-                searchResult = await fullList()
-            }
-            else{
-                searchResult = await search(searchQuery)
-            }
-        
-            for (let i = 0; i < searchResult.length; i++){
-                rows.push((
-                    <tr key = {i}>
-                        <td>{searchResult[i].user.name}</td>
-                        <td>{searchResult[i].followers.length}</td>
-                        <td>{searchResult[i].reviews.length}</td>
-                        <td><button>Follow</button></td>
-                        <td><button>View Profile</button></td>
-                    </tr>
-                ))
-            }
-            setRows(rows)
-        }
         fetchData();
     }, []);
 
