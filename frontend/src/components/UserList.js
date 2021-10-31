@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+import './style.css';
+
 const search = async (q) => {
     try {
         const config = {
@@ -60,11 +62,11 @@ function UserList(props) {
             for (let i = 0; i < searchResult.length; i++){
                 rows.push((
                     <tr key = {i}>
-                        <td>{searchResult[i].user.name}</td>
-                        <td>{searchResult[i].followers.length}</td>
-                        <td>{searchResult[i].reviews.length}</td>
-                        <td><button>Follow</button></td>
-                        <td><button>View Profile</button></td>
+                        <td className='tableRowLabelLeft'>{searchResult[i].user.name}</td>
+                        <td className='tableRowLabelCenter'>{searchResult[i].followers.length}</td>
+                        <td className='tableRowLabelCenter'>{searchResult[i].reviews.length}</td>
+                        <td><button className='tableButton'>Follow</button></td>
+                        <td><button className='tableButton'>View Profile</button></td>
                     </tr>
                 ))
             }
@@ -77,9 +79,9 @@ function UserList(props) {
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Followers</th>
-                    <th>Reviews</th>
+                    <th className='tableHeaderLabel'>Name</th>
+                    <th className='tableHeaderLabel'>Followers</th>
+                    <th className='tableHeaderLabel'>Reviews</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -94,8 +96,8 @@ function UserList(props) {
     }
 
     return (
-        <div className='Container'>
-            <h1>User List</h1>
+        <div className='DarkApp'>
+            <h1 className='pageTitle'>User List</h1>
             <div>
             <input
                 type='text'
@@ -104,8 +106,9 @@ function UserList(props) {
                 value={query}
                 onChange={(e) => {setQuery(e.target.value)}}
                 required
+                className='searchFieldInput'
             />
-            <button onClick={(e) => handleSearch(query)}>Search</button>
+            <button className='searchFieldButton' onClick={(e) => handleSearch(query)}>Search</button>
             <br></br><br></br>
             </div>
             <div>
