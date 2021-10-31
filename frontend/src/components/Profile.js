@@ -29,29 +29,27 @@ function Profile(props) {
     const token = sessionStorage.getItem('agora_token');
     const [profileState, setProfileState] = useState([]);
 
-    const fetchUserProfile = async () => {
-        const userProfile = await profile(token, null);
+    const fetchProfile = async () => {
+        // TODO: check if a userID was recieved
+        return await profile(token, null);
+    }
 
+    fetchProfile().then(response => {
         var currentState = {};
-        if (userProfile != null) {
+        if (response != null) {
             currentState = {
-                username: userProfile.user.name,
-                followerCount: userProfile.followers.length,
-                followers: userProfile.followers,
-                recommendations: userProfile.reviews
+                username: response.user.name,
+                followerCount: response.followers.length,
+                followers: response.followers,
+                recommendations: response.reviews
             }
         } else {
             currentState = null;
         }
         setProfileState(currentState);
-    }
+    })
 
-    // Enables user profile to render
-    useEffect(() => {
-        fetchUserProfile();
-    }, []);
-
-    if (profileState != null) { // User is logged in
+    if (profileState != null) { // A profile state exists
         const handleFollow = () => {
             history.push('/');
         }
@@ -74,7 +72,7 @@ function Profile(props) {
                     </div>
                 </div>
             </div>);
-    } else { // User is not logged in
+    } else { // User is not logged in => profileState is null
         const handleSignIn = () => {
             history.push('/signin');
         }
@@ -83,15 +81,15 @@ function Profile(props) {
             <div className='App'>
                 <div className='appAside' />
                 <div className='appForm'>
-                <h1>Profile</h1>
-                <div>
+                    <h1>Profile</h1>
+                    <div>
                         <p>Sorry, you must be logged in to use this feature.</p>
                         <button classname='formFieldButton'
                             onClick={() => handleSignIn()}
                         >
                             Sign In
                         </button>
-                </div>
+                    </div>
                 </div>
             </div>
         )
