@@ -78,6 +78,49 @@ router.post('/byname', [
     }
 );
 
+// @route   POST api/profile/follow/:user_id
+// @desc    Follow/Unfollow a user's profile by their ID
+// @access  Private
+router.post('/follow/:user_id', auth, async (req, res) => {
+    try {
+        const currentUser = await User.findOne({user: req.user.id});
+
+        // search database for a user with the given user_id
+        const profile = await Profile.findOne({user: req.params.user_id});
+        
+        // If there is no such user, then return an error response since that user doesn't exist
+        if (!profile) {
+            return res.status(400).json({msg: 'Profile not found'});
+        }
+
+        // Profile.findOneAndUpdate({ user: req.params.user_id }, 
+        //     { $pull: { followers: currentUser }},
+        //     (err, data) => {
+        //         if (err) {
+        //             return res.status(400).json({msg: 'Profile not found'});
+        //         }
+        //         res.json(data);
+        //     }
+        // );
+
+        // If this user is already following this profile, then unfollow, otherwise follow
+        if (profile.followers.indexOf(currentUser.id) !== -1) {
+            profile.followers.pull({ _id: currentUser.id });
+        } else {
+            profile.followers.push({ _id: currentUser.id });
+        }
+        await profile.save();
+
+        // return the json object representation of this user's profile who we just followed
+        return res.send(profile);
+    } catch (error) {
+        console.error(error.message);
+        if (error.kind == 'ObjectID') {
+            return res.status(400).json({msg: 'Profile not found'});
+        }
+        res.status(500).send('Server error');
+    }
+});
 
 // @route   POST api/profile
 // @desc    Create or update user profile

@@ -48,11 +48,11 @@ router.post('/', [auth, [
 
         try {
             // Create new review with the fields and save it in the database
-            review = new Review(reviewFields);
+            const review = new Review(reviewFields);
             await review.save();
 
             const profile = await Profile.findOne({ user: req.user.id });
-            profile.reviews.push(review);
+            profile.reviews.push({ _id: review.id });
             await profile.save();
 
             return res.send(review);
