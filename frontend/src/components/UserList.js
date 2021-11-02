@@ -46,34 +46,37 @@ function UserList(props) {
     const history = useHistory();
     const [query, setQuery] = useState('');
     const [displayRows, setRows] = useState([]);
+    let [searchResult, setSearchResult] = useState([]);
     const searchQuery = props.location.search.substring(1)
-    var rows = [];
-    
-    useEffect(() => {
-        const fetchData = async () =>{
-            var searchResult = [];
-            if (searchQuery.length == 0){
-                searchResult = await fullList()
-            }
-            else{
-                searchResult = await search(searchQuery)
-            }
-        
-            for (let i = 0; i < searchResult.length; i++){
-                rows.push((
-                    <tr key = {i}>
-                        <td className='tableRowLabelLeft'>{searchResult[i].user.name}</td>
-                        <td className='tableRowLabelCenter'>{searchResult[i].followers.length}</td>
-                        <td className='tableRowLabelCenter'>{searchResult[i].reviews.length}</td>
-                        <td><button className='tableButton'>Follow</button></td>
-                        <td><button className='tableButton'>View Profile</button></td>
-                    </tr>
-                ))
-            }
-            setRows(rows)
+    let rows = [];
+
+    const fetchData = async () => {
+        let res;
+        if (searchQuery.length === 0) {
+            res = await fullList();
+        } 
+        else {
+            res = await search(searchQuery);
         }
-        fetchData();
-    }, []);
+        return res;
+    }
+
+    fetchData()
+    .then(response => {
+        setSearchResult(response)
+        for (let i = 0; i < searchResult.length; i++){
+            rows.push((
+                <tr key = {i}>
+                    <td className='tableRowLabelLeft'>{searchResult[i].user.name}</td>
+                    <td className='tableRowLabelCenter'>{searchResult[i].followers.length}</td>
+                    <td className='tableRowLabelCenter'>{searchResult[i].reviews.length}</td>
+                    <td><button className='tableButton'>Follow</button></td>
+                    <td><button className='tableButton'>View Profile</button></td>
+                </tr>
+            ))
+        }
+        setRows(rows);
+    })
 
     const table = (
         <table>
