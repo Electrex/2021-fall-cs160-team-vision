@@ -79,6 +79,10 @@ function UserList(props) {
           }
     }
 
+    const viewProfile = (profileId) => {
+        history.push(`/profile/${profileId}`)
+    }
+
     fetchData()
     .then(response => {
         setSearchResult(response)
@@ -96,7 +100,7 @@ function UserList(props) {
                     <td><button className='tableButton' 
                         onClick={()=>handleFollow(searchResult[i].user._id)}>
                             {buttonName}</button></td>
-                    <td><button className='tableButton'>View Profile</button></td>
+                    <td><button className='tableButton' onClick={()=>viewProfile(searchResult[i]._id)}>View Profile</button></td>
                 </tr>
             ))
         }
