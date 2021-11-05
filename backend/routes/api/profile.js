@@ -83,9 +83,11 @@ router.post('/byname', [
 // @access  Private
 router.post('/follow/:user_id', auth, async (req, res) => {
     try {
-        const currentUser = await User.findOne({user: req.user.id});
+        const currentUser = await User.findOne({_id: req.user.id});
+        const currentProfile = await Profile.findOne({user: req.user.id});
 
         // search database for a user with the given user_id
+        const otherUser = await User.findOne({ _id: req.params.user_id})
         const profile = await Profile.findOne({user: req.params.user_id});
         
         // If there is no such user, then return an error response since that user doesn't exist
@@ -106,10 +108,13 @@ router.post('/follow/:user_id', auth, async (req, res) => {
         // If this user is already following this profile, then unfollow, otherwise follow
         if (profile.followers.indexOf(currentUser.id) !== -1) {
             profile.followers.pull({ _id: currentUser.id });
+            currentProfile.following.pull({ _id: otherUser.id});
         } else {
             profile.followers.push({ _id: currentUser.id });
+            currentProfile.following.push({ _id: otherUser.id});
         }
         await profile.save();
+        await currentProfile.save();
 
         // return the json object representation of this user's profile who we just followed
         return res.send(profile);
