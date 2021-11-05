@@ -61,16 +61,41 @@ function UserList(props) {
         return res;
     }
 
+    const handleFollow = async (userId) => {
+        try {
+            const config = {
+              headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': sessionStorage.getItem('agora_token')
+              }
+            }
+            const body = {}
+            const res = await axios.post(`/api/profile/follow/${userId}`, body, config);
+            console.log(res.data);
+            return res.data;
+          } catch (error) {
+            console.log(error.response.data);
+            return [];
+          }
+    }
+
     fetchData()
     .then(response => {
         setSearchResult(response)
         for (let i = 0; i < searchResult.length; i++){
+            var buttonName = 'Follow'
+            if (searchResult[i].followers.includes('614a704a6addc3b7c733c9f4')){
+                buttonName = 'Unfolllow'
+            }
+    
             rows.push((
                 <tr key = {i}>
                     <td className='tableRowLabelLeft'>{searchResult[i].user.name}</td>
                     <td className='tableRowLabelCenter'>{searchResult[i].followers.length}</td>
                     <td className='tableRowLabelCenter'>{searchResult[i].reviews.length}</td>
-                    <td><button className='tableButton'>Follow</button></td>
+                    <td><button className='tableButton' 
+                        onClick={()=>handleFollow(searchResult[i].user._id)}>
+                            {buttonName}</button></td>
                     <td><button className='tableButton'>View Profile</button></td>
                 </tr>
             ))
