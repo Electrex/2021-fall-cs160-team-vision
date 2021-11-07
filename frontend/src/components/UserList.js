@@ -42,6 +42,23 @@ const fullList = async () => {
       }
 }
 
+const myId = async () => {
+  try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': sessionStorage.getItem('agora_token')
+        }
+      }
+      const res = await axios.get('/api/users/myID', config);
+      console.log(res.data);
+      return res.data.id;
+    } catch (error) {
+      console.log(error.response.data);
+      return '';
+    }
+}
+
 function UserList(props) {
     const history = useHistory();
     const [updateState, setUpdate] = useState(0);
@@ -92,11 +109,14 @@ function UserList(props) {
           else{
               searchResult = await search(searchQuery);
           }
-      
+          const id = await myId();
+
           for (let i = 0; i < searchResult.length; i++){
-            var buttonName = 'Follow';
-            if (searchResult[i].followers.includes('614a704a6addc3b7c733c9f4')){
-                           buttonName = 'Unfolllow';
+              var buttonName = 'Follow';
+              for (let j = 0; j < searchResult[i].followers.length; j++){
+                if (searchResult[i].followers[j]._id == id){
+                  buttonName = 'Unfollow'
+                }
               }
               rows.push((
                   <tr key = {i}>
