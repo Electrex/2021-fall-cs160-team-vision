@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const User = require('../../../database/models/User') ;
+const auth = require('../../middleware/auth');
 
 // @route   GET api/users/myID
 // @desc    Returns the objectID of the currently logged in user
@@ -14,7 +15,7 @@ const User = require('../../../database/models/User') ;
 router.get('/myID', auth, async(req, res) => {
     try {
         // Return the json object for the user's ID in the response with the format {user: { id: user.id }}
-        return res.json(req);
+        return res.json(req.user);
     } catch (error) {
         console.error(error.message);
         res.status(500).send('Server error');
