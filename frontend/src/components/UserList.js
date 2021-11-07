@@ -44,6 +44,7 @@ const fullList = async () => {
 
 function UserList(props) {
     const history = useHistory();
+    const [updateState, setUpdate] = useState(0);
     const [query, setQuery] = useState('');
     const [displayRows, setRows] = useState([]);
     let [searchResult, setSearchResult] = useState([]);
@@ -72,40 +73,47 @@ function UserList(props) {
             const body = {}
             const res = await axios.post(`/api/profile/follow/${userId}`, body, config);
             console.log(res.data);
-            return res.data;
           } catch (error) {
             console.log(error.response.data);
-            return [];
           }
+          setUpdate(updateState + 1)
     }
 
     const viewProfile = (profileId) => {
         history.push(`/profile/${profileId}`)
     }
 
-    fetchData()
-    .then(response => {
-        setSearchResult(response)
-        for (let i = 0; i < searchResult.length; i++){
-            var buttonName = 'Follow'
+    useEffect(() => {
+      const fetchData = async () =>{
+          var searchResult = [];
+          if (searchQuery.length == 0){
+              searchResult = await fullList();
+          }
+          else{
+              searchResult = await search(searchQuery);
+          }
+      
+          for (let i = 0; i < searchResult.length; i++){
+            var buttonName = 'Follow';
             if (searchResult[i].followers.includes('614a704a6addc3b7c733c9f4')){
-                buttonName = 'Unfolllow'
-            }
-    
-            rows.push((
-                <tr key = {i}>
-                    <td className='tableRowLabelLeft'>{searchResult[i].user.name}</td>
-                    <td className='tableRowLabelCenter'>{searchResult[i].followers.length}</td>
-                    <td className='tableRowLabelCenter'>{searchResult[i].reviews.length}</td>
-                    <td><button className='tableButton' 
-                        onClick={()=>handleFollow(searchResult[i].user._id)}>
+                           buttonName = 'Unfolllow';
+              }
+              rows.push((
+                  <tr key = {i}>
+                      <td className='tableRowLabelLeft'>{searchResult[i].user.name}</td>
+                      <td className='tableRowLabelCenter'>{searchResult[i].followers.length}</td>
+                      <td className='tableRowLabelCenter'>{searchResult[i].reviews.length}</td>
+                      <td><button className='tableButton' 
+                          onClick={()=>handleFollow(searchResult[i].user._id)}>
                             {buttonName}</button></td>
-                    <td><button className='tableButton' onClick={()=>viewProfile(searchResult[i]._id)}>View Profile</button></td>
-                </tr>
-            ))
-        }
-        setRows(rows);
-    })
+                      <td><button className='tableButton' onClick={()=>viewProfile(searchResult[i]._id)}>View Profile</button></td>
+                  </tr>
+              ))
+          }
+          setRows(rows)
+      }
+      fetchData();
+  }, [updateState]);
 
     const table = (
         <table>
@@ -124,7 +132,7 @@ function UserList(props) {
     
     const handleSearch = (query) => {
         history.push(`/users?${query}`);
-        window.location.reload(false);
+        setUpdate(updateState + 1)
     }
 
     return (
