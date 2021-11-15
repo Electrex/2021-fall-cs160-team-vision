@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function CreateReview(props) {
-    // const history = useHistory();
+    //const history = useHistory();
 
     //create review object according to backend api
     const createReview = (title, desc, link, image) => {
@@ -29,7 +29,7 @@ function CreateReview(props) {
     
     //construct JSON from review object and send it to /api/review
     const postReview = async (event) => {
-        event.preventDefault()
+        event.preventDefault();
         const submitAttempt = createReview(title,description, link, imageURL)
         try {
             const token = sessionStorage.getItem('agora_token');
@@ -38,34 +38,41 @@ function CreateReview(props) {
                     'Content-Type': 'application/json',
                     'x-auth-token': token
                 }
-            }
-            const body = JSON.stringify(submitAttempt)
-            const result = await axios.post('/api/review', body, config); 
-            if (result.status === 400 || result.status === 500) {
+            };
+            const body = JSON.stringify(submitAttempt);
+            const response = await axios.post('/api/review', body, config); 
+            if (response.status === 400 || response.status === 500) {
                 return null
             }
-            console.log(result.data);
+            console.log(response.data);
             alert('Review Submitted!');
-            return result.data;
+            return {error:false, body:response};
         } catch(error){
-            console.log(error.response.data)
-            return null
+            return {error:true, body:error.response};
         }
     }
 
     const submitReview = async (event) => {
-        if (await postReview(event)){
+        const result = await postReview(event);
+        if (!result.error){
             props.history.push('/me/reviews');
             alert('Review Submitted!');
         } else {
-            clearState()
+            if(result.body.status === 401){
+                alert('You are not logged in! Click OK to proceed to the login page');
+                clearState()
+                props.history.push('/signin')
+            }else{
+                clearState()
+            }
+            
         }
     }
     return (
         <div className='Container'>
             <h1>Create your review here!</h1>
             <form onSubmit={event => submitReview(event)}>
-                <label for='link'>
+                <label htmlFor='link'>
                     Add a link to the product you are reviewing:
                 </label><br />
                 <input 
@@ -76,7 +83,7 @@ function CreateReview(props) {
                     onChange={event => {setLink(event.target.value)}}
                     required
                 /><br />
-                <label for='title'>
+                <label htmlFor='title'>
                     What is the title of your review?
                 </label><br />
                 <input 
@@ -87,7 +94,7 @@ function CreateReview(props) {
                     onChange={event => {setTitle(event.target.value)}}
                     required
                 /><br />
-                <label for='desc'>
+                <label htmlFor='desc'>
                     Enter your review here:</label> <br />
                 <textarea
                     type='text'
@@ -98,7 +105,7 @@ function CreateReview(props) {
                     required
                 />
                 <br />
-                <label for='image'>
+                <label htmlFor='image'>
                     Add image URL here:
                 </label><br />
                 <input 

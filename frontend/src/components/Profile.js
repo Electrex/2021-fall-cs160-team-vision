@@ -27,7 +27,7 @@ const profile = async (token, userID) => {
 function Profile(props) {
     const history = useHistory();
     const token = sessionStorage.getItem('agora_token');
-    const [profileState, setProfileState] = useState([]);
+    const [profileState, setProfileState] = useState({});
 
     const fetchProfile = async () => {
         // TODO: check if a userID was recieved
