@@ -29,7 +29,7 @@ function UserLanding(props){
     }
 
     return (
-      <div>
+      <div className='DarkApp'>
         <div>
             <input
             type='text'
@@ -42,7 +42,7 @@ function UserLanding(props){
           <button onClick={(e) => handleSearch(query)}>Search</button>
         </div>
         <div>
-          <h2>
+          <h2 className='pageTitle'>
             Following:
           </h2>
           <h3>

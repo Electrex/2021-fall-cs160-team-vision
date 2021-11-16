@@ -62,7 +62,7 @@ function Profile(props) {
                         <h1>Profile</h1>
                         <p>Username: {profileState.username}</p>
                         <p>Number of Followers: {profileState.followerCount}</p>
-                        <button classname='formFieldButton'
+                        <button className='searchFieldButton'
                             onClick={() => handleFollow()}
                         >
                             Follow

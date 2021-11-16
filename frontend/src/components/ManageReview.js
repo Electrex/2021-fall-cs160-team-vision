@@ -23,7 +23,7 @@ function ManageReview(props) {
         return data ? (
             data.map((data) => {
                 return (
-                    <div className="data" key={data.id}>
+                    <div className='DarkApp standardPage' key={data.id}>
                         <h3>{data.title}<a href={data.link}>Buy</a></h3>
                         <img src={data.imageURL} height="400"></img>
                         <h4>{data.description}</h4>
@@ -37,8 +37,8 @@ function ManageReview(props) {
     }
 
     return (
-        <div className='Container'>
-            <h1>Reviews</h1>
+        <div>
+            <h1 className='pageTitle'>Reviews</h1>
             {displayData()}
         </div>
     );
