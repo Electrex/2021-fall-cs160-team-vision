@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 
 const profile = async (token) =>{
     try {
@@ -30,6 +30,29 @@ function UserLanding(props){
 
     return (
       <div className='DarkApp'>
+        <div className='pageSwitcher'>
+              <NavLink
+                to='/me/profile'
+                activeClassName='pageSwitcherItem-active'
+                className='pageSwitcherItem'
+              >
+                Profile
+              </NavLink>
+              <NavLink
+                to="/me/reviews"
+                activeClassName='pageSwitcherItem-active'
+                className='pageSwitcherItem'
+              >
+                Manage Reviews
+              </NavLink>
+              <button 
+                  onClick={() => props.history.goBack()} 
+                  className='pageSwitcherItem'
+              >
+                  Go Back
+              </button>
+        </div>
+        
         <div>
             <input
             type='text'
