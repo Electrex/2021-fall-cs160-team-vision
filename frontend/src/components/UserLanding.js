@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 
@@ -23,6 +23,43 @@ function UserLanding(props){
     const token = sessionStorage.getItem('agora_token');
     const json =  profile(token);
     const [query, setQuery] = useState('');
+    const [displayRows, setRows] = useState([]);
+
+    const viewProfile = (profileId) => {
+      history.push(`/profile/${profileId}`)
+  }
+
+    useEffect(() => {
+      const fetchData = async () =>{
+          var data = await profile(token);
+          var follow = data.following
+          var rows = [];
+          for (let i = 0; i < follow.length; i++){
+              rows.push((
+                  <tr key = {i}>
+                      <td className='tableRowLabelLeft'>{<img src={follow[i].avatar} height="50"></img>}</td>
+                      <td className='tableRowLabelCenter'>{follow[i].name}</td>
+                      <td><button className='tableButton' onClick={()=>viewProfile(follow[i]._id)}>View Profile</button></td>
+                  </tr>
+              ))
+          }
+          setRows(rows)
+      }
+      fetchData();
+  }, []);
+
+  const table = (
+    <table>
+        <thead>
+            <tr>
+                <th className='tableHeaderLabel'></th>
+                <th className='tableHeaderLabel'></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>{displayRows}</tbody>
+    </table>
+);
 
     const handleSearch = (query) => {
         history.push(`/users?${query}`);
@@ -46,7 +83,7 @@ function UserLanding(props){
             Following:
           </h2>
           <h3>
-            {json.followers}
+            {table}
           </h3>
         </div>
       </div>
