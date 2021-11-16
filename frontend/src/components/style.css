@@ -214,4 +214,17 @@
     font-size: 20px;
   }
 
-  
+  .standardPage{
+    color: white;
+  }
+
+  .smallButton{
+    background-color: #6b5b95;
+    color: white;
+    border-radius: 10px;
+    padding: 5px 5px;
+    font-size: 0.8em;
+    font-weight: 500;
+    width: 60px;
+    margin: 5px;
+  }

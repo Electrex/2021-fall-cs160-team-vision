@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 //import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import "./style.css";
 
 function CreateReview(props) {
     //const history = useHistory();
@@ -69,10 +70,10 @@ function CreateReview(props) {
         }
     }
     return (
-        <div className='Container'>
-            <h1>Create your review here!</h1>
+        <div className='DarkApp'>
+            <h1 className='pageTitle'>Create your review here!</h1>
             <form onSubmit={event => submitReview(event)}>
-                <label htmlFor='link'>
+                <label className='standardPage' htmlFor='link'>
                     Add a link to the product you are reviewing:
                 </label><br />
                 <input 
@@ -83,7 +84,7 @@ function CreateReview(props) {
                     onChange={event => {setLink(event.target.value)}}
                     required
                 /><br />
-                <label htmlFor='title'>
+                <label className='standardPage' htmlFor='title'>
                     What is the title of your review?
                 </label><br />
                 <input 
@@ -94,7 +95,7 @@ function CreateReview(props) {
                     onChange={event => {setTitle(event.target.value)}}
                     required
                 /><br />
-                <label htmlFor='desc'>
+                <label className='standardPage' htmlFor='desc'>
                     Enter your review here:</label> <br />
                 <textarea
                     type='text'
@@ -105,7 +106,7 @@ function CreateReview(props) {
                     required
                 />
                 <br />
-                <label htmlFor='image'>
+                <label className='standardPage' htmlFor='image'>
                     Add image URL here:
                 </label><br />
                 <input 
@@ -116,7 +117,7 @@ function CreateReview(props) {
                     onChange={event => {setImage(event.target.value)}}
                     required
                 /><br />
-                <input type='submit' className='btn btn-primary' value='Submit' />
+                <input type='submit' className='btn btn-primary smallButton' value='Submit' />
             </form>
         </div>
     );
