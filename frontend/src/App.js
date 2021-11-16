@@ -8,6 +8,7 @@ import Register from './components/Register';
 import UserLanding from './components/UserLanding';
 import UserList from './components/UserList';
 import Profile from './components/Profile';
+import About from './components/About';
 
 function App(){
   return(
@@ -16,12 +17,13 @@ function App(){
         <Switch>
           <Route path='/' exact component={LandingPage}/>
           <Route path='/me' exact component={UserLanding}/>
+          <Route path='/me/profile' exact component={Profile}/>
           <Route path='/me/reviews' exact component={ManageReview}/>
           <Route path='/me/reviews/add' exact component={CreateReview}/>
           <Route path='/signin' exact component={Login}/>
           <Route path='/signup' exact component={Register}/>
           <Route path='/users' component={UserList}/>
-          <Route path='/profile' exact component={Profile}/>
+          <Route path='/about' component={About}/>   
         </Switch>
       </main>
     </BrowserRouter>
