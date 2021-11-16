@@ -66,6 +66,8 @@ function Login(props) {
         <div className='App'>
             <div className='appAside' />
             <div className='appForm'>
+
+
                 <div className='pageSwitcher'>
                     <NavLink
                         to='/signin'
@@ -81,6 +83,12 @@ function Login(props) {
                     >
                         Sign Up
                     </NavLink>
+                    <button 
+                        onClick={() => props.history.goBack()} 
+                        className='pageSwitcherItem'
+                    >
+                        Go Back
+                    </button>
             	</div>
 
                 <div className='formCenter'>
