@@ -228,3 +228,13 @@
     width: 60px;
     margin: 5px;
   }
+
+  .bigButton {
+    background-color: #6b5b95;
+    color: white;
+    border-radius: 25px;
+    padding: 5px 10px;
+    font-size: 0.8em;
+    font-weight: 500;
+    width: 150px;
+  }
