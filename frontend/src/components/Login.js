@@ -66,8 +66,6 @@ function Login(props) {
         <div className='App'>
             <div className='appAside' />
             <div className='appForm'>
-
-
                 <div className='pageSwitcher'>
                     <NavLink
                         to='/signin'
