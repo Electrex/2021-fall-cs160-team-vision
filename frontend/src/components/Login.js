@@ -68,16 +68,16 @@ function Login(props) {
             <div className='appForm'>
                 <div className='pageSwitcher'>
                     <NavLink
-                        to="/signin"
-                        activeClassName="pageSwitcherItem-active"
-                        className="pageSwitcherItem"
+                        to='/signin'
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
                     >
                         Sign In
                     </NavLink>
                     <NavLink
                         to="/signup"
-                        activeClassName="pageSwitcherItem-active"
-                        className="pageSwitcherItem"
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
                     >
                         Sign Up
                     </NavLink>
