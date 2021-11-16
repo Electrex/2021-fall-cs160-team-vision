@@ -39,7 +39,7 @@ function UserLanding(props){
             onChange={(e) => {setQuery(e.target.value)}}
             required
           />
-          <button onClick={(e) => handleSearch(query)}>Search</button>
+          <button className='smallButton' onClick={(e) => handleSearch(query)}>Search</button>
         </div>
         <div>
           <h2 className='pageTitle'>
