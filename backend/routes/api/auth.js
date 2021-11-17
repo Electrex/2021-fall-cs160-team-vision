@@ -9,7 +9,7 @@ const bcrypt = require('bcryptjs');
 
 // @route   GET api/auth
 // @desc    TEST route
-// @access  Public
+// @access  Private
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
@@ -50,7 +50,7 @@ router.post(
             if (!user) {
                 return res
                     .status(400)
-                    .json({errors: [{msg: 'Invalid credentials'}]});
+                    .json({errors: [{msg: 'No such user exists'}]});
             }
 
             // decrypt the password stored in the database and compare it to the password passed into the sign on
@@ -59,8 +59,8 @@ router.post(
             // If the passwords don't match, then the person trying to login will not be authorized to access
             if (!isMatch) {
                 return res
-                    .status(400)
-                    .json({errors: [{msg: 'Invalid credentials'}]});
+                    .status(401)
+                    .json({errors: [{msg: 'Unauthorized'}]});
             }
 
             // Create a payload object contianing a single object with an id attribute corresponding to the _id for the user in the mongodb database

@@ -32,6 +32,23 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
+// @route   POST api/profile/:user_id
+// @desc    Returns all profiles who have names which match or contain the searched-for name as a substring
+// @access  Public
+router.get('/:user_id', async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id })
+            .populate('user', ['name', 'avatar'])
+            .populate('followers')
+            .populate('following')
+            .populate('reviews');
+        return res.json(profile);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
+});
+
 // @route   POST api/profile/byname
 // @desc    Returns all profiles who have names which match or contain the searched-for name as a substring
 // @access  Public
