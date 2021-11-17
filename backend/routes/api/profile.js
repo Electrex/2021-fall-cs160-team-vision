@@ -231,7 +231,7 @@ router.get('/', async (req, res) => {
 router.get('/:profile_id', async (req, res) => {
     try {
         // search database for a profile with the given user_id
-        const profile = await Profile.findOne({_id: req.params.profile_id});
+        const profile = await Profile.findOne({_id: req.params.profile_id})
             .populate('user', ['name', 'avatar'])
             .populate('followers')
             .populate('following')
