@@ -65,16 +65,8 @@ function UserLanding(props){
         history.push(`/users?${query}`);
     }
 
-    const handleNavigation = (url) => {
-      history.push(url)
-    }
-
     return (
       <div className='DarkApp'>
-        <div>
-        <button className='bigButton' onClick={(e) => handleNavigation('/profile')}>View Profile</button>
-        <button className='bigButton' onClick={(e) => handleNavigation('/me/reviews')}>Manage Reviews</button>
-        </div>
         <div>
             <input
             type='text'
