@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
 function ManageReview(props) {
@@ -32,12 +32,29 @@ function ManageReview(props) {
                 );
             })
         ) : (
-            <h3>No data yet</h3>
+            <div>
+                <h3>Loading Data</h3>
+            </div>
         );
     }
 
     return (
-        <div>
+        <div className='DarkApp standardPage'>
+            <div className='pageSwitcherShort'>
+                            <NavLink
+                                to='/me/reviews/add'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Create Review
+                            </NavLink>
+                            <button 
+                                onClick={() => props.history.goBack()} 
+                                className='pageSwitcherItem'
+                            >
+                                Go Back
+                            </button>
+                        </div>
             <h1 className='pageTitle'>Reviews</h1>
             {displayData()}
         </div>

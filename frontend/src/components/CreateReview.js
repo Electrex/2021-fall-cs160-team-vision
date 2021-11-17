@@ -71,6 +71,14 @@ function CreateReview(props) {
     }
     return (
         <div className='DarkApp'>
+            <div className='pageSwitcher'>
+              <button 
+                  onClick={() => props.history.goBack()} 
+                  className='pageSwitcherItem'
+              >
+                  Go Back
+              </button>
+            </div>
             <h1 className='pageTitle'>Create your review here!</h1>
             <form onSubmit={event => submitReview(event)}>
                 <label className='standardPage' htmlFor='link'>

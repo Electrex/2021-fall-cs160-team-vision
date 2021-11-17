@@ -68,19 +68,25 @@ function Login(props) {
             <div className='appForm'>
                 <div className='pageSwitcher'>
                     <NavLink
-                        to="/signin"
-                        activeClassName="pageSwitcherItem-active"
-                        className="pageSwitcherItem"
+                        to='/signin'
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
                     >
                         Sign In
                     </NavLink>
                     <NavLink
                         to="/signup"
-                        activeClassName="pageSwitcherItem-active"
-                        className="pageSwitcherItem"
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
                     >
                         Sign Up
                     </NavLink>
+                    <button 
+                        onClick={() => props.history.goBack()} 
+                        className='pageSwitcherItem'
+                    >
+                        Go Back
+                    </button>
             	</div>
 
                 <div className='formCenter'>

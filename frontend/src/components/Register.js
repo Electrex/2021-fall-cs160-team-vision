@@ -129,6 +129,12 @@ function Register(props) {
           >
             Sign Up
           </NavLink>
+          <button 
+              onClick={() => props.history.goBack()} 
+              className='pageSwitcherItem'
+          >
+              Go Back
+          </button>
         </div>
 
         <div className='formCenter'>
