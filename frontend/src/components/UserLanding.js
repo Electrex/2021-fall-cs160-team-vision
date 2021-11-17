@@ -170,8 +170,6 @@ function UserLanding(props){
         setUpdate(updateState + 1);
     }
 
-    
-
     return (
       <div className='DarkApp'>
         <div>
