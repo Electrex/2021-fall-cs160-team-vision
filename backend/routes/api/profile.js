@@ -225,11 +225,39 @@ router.get('/', async (req, res) => {
     }
 });
 
+// @route   GET api/profile/:profile_id
+// @desc    Get profile by profile ID
+// @access  Public
+router.get('/:profile_id', async (req, res) => {
+    try {
+        // search database for a profile with the given user_id
+        const profile = await Profile.findOne({_id: req.params.profile_id});
+            .populate('user', ['name', 'avatar'])
+            .populate('followers')
+            .populate('following')
+            .populate('reviews');
+        
+        // If there is no such user, then return an error response since that user doesn't exist
+        if (!profile) {
+            return res.status(400).json({msg: 'Profile not found'});
+        }
+        
+        // return the json object representation of this user profile
+        res.json(profile);
+    } catch (error) {
+        console.error(error.message);
+        if (error.kind == 'ObjectID') {
+            return res.status(400).json({msg: 'Profile not found'});
+        }
+        res.status(500).send('Server error');
+    }
+});
+
 
 // @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID
 // @access  Public
-router.get('/user/:user_id', async (req, res) => {
+router.get('/:user_id', async (req, res) => {
     try {
         // search database for a profile with the given user_id
         const profile = await Profile.findOne({user: req.params.user_id})
