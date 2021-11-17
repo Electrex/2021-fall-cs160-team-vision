@@ -31,7 +31,7 @@ function UserLanding(props){
 
     return (
       <div className='DarkApp'>
-        <div className='pageSwitcher'>
+        <div className='pageSwitcherShort'>
           <NavLink
             to='/users'
             activeClassName='pageSwitcherItem-active'

@@ -158,7 +158,7 @@ function UserList(props) {
     return (
         <div className='DarkApp'>
             <h1 className='pageTitle'>User List</h1>
-            <div className='pageSwitcher'>
+            <div className='pageSwitcherShort'>
               <NavLink
                 to='/users'
                 activeClassName='pageSwitcherItem-active'

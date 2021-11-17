@@ -24,22 +24,6 @@ function ManageReview(props) {
             data.map((data) => {
                 return (
                     <div className='DarkApp standardPage' key={data.id}>
-                        <div className='pageSwitcher'>
-                            <NavLink
-                                to='/me/reviews/add'
-                                activeClassName='pageSwitcherItem-active'
-                                className='pageSwitcherItem'
-                            >
-                                Create Review
-                            </NavLink>
-                            <button 
-                                onClick={() => props.history.goBack()} 
-                                className='pageSwitcherItem'
-                            >
-                                Go Back
-                            </button>
-                        </div>
-
                         <h3>{data.title}<a href={data.link}>Buy</a></h3>
                         <img src={data.imageURL} height="400"></img>
                         <h4>{data.description}</h4>
@@ -56,6 +40,21 @@ function ManageReview(props) {
 
     return (
         <div className='DarkApp standardPage'>
+            <div className='pageSwitcherShort'>
+                            <NavLink
+                                to='/me/reviews/add'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Create Review
+                            </NavLink>
+                            <button 
+                                onClick={() => props.history.goBack()} 
+                                className='pageSwitcherItem'
+                            >
+                                Go Back
+                            </button>
+                        </div>
             <h1 className='pageTitle'>Reviews</h1>
             {displayData()}
         </div>
