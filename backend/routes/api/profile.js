@@ -37,7 +37,7 @@ router.get('/me', auth, async (req, res) => {
 // @access  Public
 router.get('/:user_id', async (req, res) => {
     try {
-        const profile = await Profile.findOne({ user: req.user.id })
+        const profile = await Profile.findOne({ user: req.params.user_id })
             .populate('user', ['name', 'avatar'])
             .populate('followers')
             .populate('following')

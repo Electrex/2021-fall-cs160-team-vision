@@ -23,7 +23,8 @@ function App(){
           <Route path='/signin' exact component={Login}/>
           <Route path='/signup' exact component={Register}/>
           <Route path='/users' component={UserList}/>
-          <Route path='/about' component={About}/>   
+          <Route path='/about' component={About}/>
+          <Route path='/profile/:id' component={Profile}/>
         </Switch>
       </main>
     </BrowserRouter>
