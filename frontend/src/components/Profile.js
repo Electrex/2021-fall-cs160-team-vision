@@ -97,8 +97,9 @@ const getLists = (response) => {
 
 
 // TODO: add a unfollow button to the profile
-// TODO: add better formatting to the recommendation list
-// TODO: add better formatting and functioning follow buttons to the followers list
+// TODO: add better formatting and view reviews to the recommendation list
+// TODO: add better formatting to the followers list
+// TODO: Address and fix edge case where the user ID happens to be the same as the logged-in user (to prevent following own profile).
 function Profile(props) {
     const history = useHistory();
     const token = sessionStorage.getItem('agora_token');
@@ -126,63 +127,61 @@ function Profile(props) {
             }
             setProfileState(currentState);
         })
-    }, []);
+    }, [userID]);
 
-    // TODO: Make the View Profile go to the user ID profile.
-    if (userID != null) { // A user ID was received by the profile page
+    if (userID != null) { // A user ID was received by the profile page and is not the logged-in user
         return (
             <div className='App'>
                 <div className='appAside' />
                 <div className='appForm'>
                     <div>
-                        <h1>Profile</h1>
                         <div className='pageSwitcherShort'>
-                    <NavLink
-                        to='/users'
-                        activeClassName='pageSwitcherItem-active'
-                        className='pageSwitcherItem'
-                    >
-                        Find Users
-                    </NavLink>
-                    <NavLink
-                        to='/me'
-                        activeClassName='pageSwitcherItem-active'
-                        className='pageSwitcherItem'
-                    >
-                        Following
-                    </NavLink>
-                    <NavLink
-                        to='/me/profile'
-                        activeClassName='pageSwitcherItem-active'
-                        className='pageSwitcherItem'
-                    >
-                        Profile
-                    </NavLink>
-                    <NavLink
-                        to="/me/reviews"
-                        activeClassName='pageSwitcherItem-active'
-                        className='pageSwitcherItem'
-                    >
-                        Manage Reviews
-                    </NavLink>
-                    <button 
-                        onClick={() => props.history.goBack()} 
-                        className='pageSwitcherItem'
-                    >
-                        Go Back
-                    </button>
-                    </div>
+                            <NavLink
+                                to='/users'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Find Users
+                            </NavLink>
+                            <NavLink
+                                to='/me'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Following
+                            </NavLink>
+                            <NavLink
+                                to='/me/profile'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Profile
+                            </NavLink>
+                            <NavLink
+                                to="/me/reviews"
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Manage Reviews
+                            </NavLink>
+                            <button
+                                onClick={() => props.history.goBack()}
+                                className='pageSwitcherItem'
+                            >
+                                Go Back
+                            </button>
+
+                        </div>
+                        <h1>Profile</h1>
                         <button className='formFieldButton'
-                            onClick={() => handleFollow(token, userID)}
-                        >
+                            onClick={() => handleFollow(token, userID)}>
                             Follow
                         </button>
                         <p>Username: {profileState.username}</p>
                         <p>Number of Followers: {profileState.followerCount}</p>
-                        <p>Followers: {profileState.followers.map(follower => <p>{follower.name}
-                            <button className='tableButton'
-                                onClick={() => history.push(`/me/profile`)}>View Profile</button></p>)}</p>
-                        <p>User Reviews: {profileState.recommendations.map(review => <p>{review.name}</p>)}</p>
+                        <p>Followers: {profileState.followers.map(follower => <p>{follower.name} <button className='tableButton'
+                            onClick={() => history.push(`/profile/${follower._id}`)}>View Profile</button></p>)}</p>
+                        <p>User Reviews: {profileState.recommendations.map(rec => <p>{rec.title}</p>)}</p>
                     </div>
                 </div>
             </div>);
@@ -192,49 +191,49 @@ function Profile(props) {
                 <div className='appAside' />
                 <div className='appForm'>
                     <div>
-                        <h1>User Profile</h1>
                         <div className='pageSwitcherShort'>
-                    <NavLink
-                        to='/users'
-                        activeClassName='pageSwitcherItem-active'
-                        className='pageSwitcherItem'
-                    >
-                        Find Users
-                    </NavLink>
-                    <NavLink
-                        to='/me'
-                        activeClassName='pageSwitcherItem-active'
-                        className='pageSwitcherItem'
-                    >
-                        Following
-                    </NavLink>
-                    <NavLink
-                        to='/me/profile'
-                        activeClassName='pageSwitcherItem-active'
-                        className='pageSwitcherItem'
-                    >
-                        Profile
-                    </NavLink>
-                    <NavLink
-                        to="/me/reviews"
-                        activeClassName='pageSwitcherItem-active'
-                        className='pageSwitcherItem'
-                    >
-                        Manage Reviews
-                    </NavLink>
-                    <button 
-                        onClick={() => props.history.goBack()} 
-                        className='pageSwitcherItem'
-                    >
-                        Go Back
-                    </button>
-                    </div>
+                            <NavLink
+                                to='/users'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Find Users
+                            </NavLink>
+                            <NavLink
+                                to='/me'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Following
+                            </NavLink>
+                            <NavLink
+                                to='/me/profile'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Profile
+                            </NavLink>
+                            <NavLink
+                                to="/me/reviews"
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Manage Reviews
+                            </NavLink>
+                            <button
+                                onClick={() => props.history.goBack()}
+                                className='pageSwitcherItem'
+                            >
+                                Go Back
+                            </button>
+                        </div>
+                        <h1>User Profile</h1>
                         <p>Username: {profileState.username}</p>
                         <p>Number of Followers: {profileState.followerCount}</p>
                         <p>Followers: {profileState.followers.map(
                             follower => <p>{follower.name} <button className='tableButton'
-                                onClick={() => history.push(`/me/profile`)}>View Profile</button></p>)}</p>
-                        <p>User Reviews: {profileState.recommendations.map(review => <p>{review.name}</p>)}</p>
+                                onClick={() => history.push(`/profile/${follower._id}`)}>View Profile</button></p>)}</p>
+                        <p>User Reviews: {profileState.recommendations.map(rec => <p>{rec.title}</p>)}</p>
                     </div>
                 </div>
             </div>);
@@ -247,7 +246,45 @@ function Profile(props) {
             <div className='App'>
                 <div className='appAside' />
                 <div className='appForm'>
-                    <h1>Profile</h1>
+                    <div>
+                        <div className='pageSwitcherShort'>
+                            <NavLink
+                                to='/users'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Find Users
+                            </NavLink>
+                            <NavLink
+                                to='/me'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Following
+                            </NavLink>
+                            <NavLink
+                                to='/me/profile'
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Profile
+                            </NavLink>
+                            <NavLink
+                                to="/me/reviews"
+                                activeClassName='pageSwitcherItem-active'
+                                className='pageSwitcherItem'
+                            >
+                                Manage Reviews
+                            </NavLink>
+                            <button
+                                onClick={() => props.history.goBack()}
+                                className='pageSwitcherItem'
+                            >
+                                Go Back
+                            </button>
+                        </div>
+                    </div>
+                    <h1>Access Denied</h1>
                     <div>
                         <p>Sorry, you must be logged in to use this feature.</p>
                         <button className='formFieldButton'
