@@ -96,8 +96,8 @@ function UserList(props) {
           setUpdate(updateState + 1)
     }
 
-    const viewProfile = (profileId) => {
-        history.push(`/profile/${profileId}`)
+    const viewProfile = (userId) => {
+        history.push(`/profile/${userId}`)
     }
 
     useEffect(() => {
@@ -126,7 +126,7 @@ function UserList(props) {
                       <td><button className='tableButton' 
                           onClick={()=>handleFollow(searchResult[i].user._id)}>
                             {buttonName}</button></td>
-                      <td><button className='tableButton' onClick={()=>viewProfile(searchResult[i]._id)}>View Profile</button></td>
+                      <td><button className='tableButton' onClick={()=>viewProfile(searchResult[i].user._id)}>View Profile</button></td>
                   </tr>
               ))
           }

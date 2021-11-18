@@ -4,8 +4,18 @@ import axios from 'axios';
 import './style.css';
 
 
-// Function to get user profile using the session token
-const profile = async (token, userID) => {
+// Function to get a profile, depending on if a user ID is provided
+const fetchProfile = async (token, userID) => {
+    if (userID != null) {
+        return await getOtherProfile(token, userID);
+    } else {
+        return await getUserProfile(token);
+    }
+}
+
+
+// Function to get the user profile using the session token
+const getUserProfile = async (token) => {
     try {
         const config = {
             headers: {
@@ -21,58 +31,142 @@ const profile = async (token, userID) => {
 }
 
 
-// TODO: use /api/profile/:userid API call to support viewing of other people's profiles
-// TODO: format the recommendation list (should have some profiles w/ existing recs in database to help test this)
-// TODO: format the followers list (similar to above TODO)
+// Function to get another user's profile using their user ID
+const getOtherProfile = async (token, userID) => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            }
+        }
+        const result = await axios.get(`/api/profile/${userID}`, config);
+        return result.data;
+    } catch (error) {
+        console.log(error.response.data);
+    }
+}
+
+
+// Function to follow the current profile
+const handleFollow = async (token, userID) => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            }
+        }
+        const body = {}
+        const res = await axios.post(`/api/profile/follow/${userID}`, body, config);
+        return res.data;
+    } catch (error) {
+        console.log(error.response.data);
+    }
+}
+
+
+// Initial value for the profile state
+const initialState = {
+    username: '',
+    followerCount: 0,
+    followers: [],
+    recommendations: []
+}
+
+
+// Function to get the names from each follower and reviews of the profile
+const getLists = (response) => {
+    if (response == null) {
+        return [];
+    }
+
+    var followers = [];
+    var recommendations = [];
+    for (let i = 0; i < response.followers.length; i++) {
+        followers.push(response.followers[i])
+    }
+    for (let i = 0; i < response.reviews.length; i++) {
+        recommendations.push(response.reviews[i])
+    }
+
+    console.log(followers);
+    console.log(recommendations);
+    return [followers, recommendations];
+}
+
+
+// TODO: add a unfollow button to the profile
+// TODO: add better formatting to the recommendation list
+// TODO: add better formatting and functioning follow buttons to the followers list
 function Profile(props) {
     const history = useHistory();
     const token = sessionStorage.getItem('agora_token');
-    const [profileState, setProfileState] = useState({});
+    const [profileState, setProfileState] = useState(initialState);
+    const userID = props.match.params.id; // Grabs user ID from the URL
+    console.log(userID);
 
-    const fetchProfile = async () => {
-        // TODO: check if a userID was recieved
-        return await profile(token, null);
-    }
+    useEffect(() => {
+        fetchProfile(token, userID).then(response => {
+            var currentState = {};
 
-    fetchProfile().then(response => {
-        var currentState = {};
-        if (response != null) {
-            currentState = {
-                username: response.user.name,
-                followerCount: response.followers.length,
-                followers: response.followers,
-                recommendations: response.reviews
+            // Placing followers and recs into separate lists seems to avoid the "Objects cannot be a React child" error
+            // TODO: find a more elegant solution to this
+            const lists = getLists(response);
+            console.log(lists);
+            if (response != null) {
+                currentState = {
+                    username: response.user.name,
+                    followerCount: response.followers.length,
+                    followers: lists[0],
+                    recommendations: lists[1]
+                }
+            } else {
+                currentState = initialState;
             }
-        } else {
-            currentState = null;
-        }
-        setProfileState(currentState);
-    })
+            setProfileState(currentState);
+        })
+    }, []);
 
-    if (profileState != null) { // A profile state exists
-        const handleFollow = () => {
-            history.push('/');
-        }
-
+    // TODO: Make the View Profile go to the user ID profile.
+    if (userID != null) { // A user ID was received by the profile page
         return (
             <div className='App'>
                 <div className='appAside' />
                 <div className='appForm'>
                     <div>
                         <h1>Profile</h1>
-                        <p>Username: {profileState.username}</p>
-                        <p>Number of Followers: {profileState.followerCount}</p>
-                        <button className='searchFieldButton'
-                            onClick={() => handleFollow()}
+                        <button className='formFieldButton'
+                            onClick={() => handleFollow(token, userID)}
                         >
                             Follow
                         </button>
-                        <p>Followers: {profileState.followers}</p>
-                        <p>User Recommendations: {profileState.recommendations}</p>
+                        <p>Username: {profileState.username}</p>
+                        <p>Number of Followers: {profileState.followerCount}</p>
+                        <p>Followers: {profileState.followers.map(follower => <p>{follower.name}
+                            <button className='tableButton'
+                                onClick={() => history.push(`/me/profile`)}>View Profile</button></p>)}</p>
+                        <p>User Reviews: {profileState.recommendations.map(review => <p>{review.name}</p>)}</p>
                     </div>
                 </div>
             </div>);
-    } else { // User is not logged in => profileState is null
+    } else if (profileState != null && profileState !== initialState) { // No user id, but user is logged in
+        return (
+            <div className='App'>
+                <div className='appAside' />
+                <div className='appForm'>
+                    <div>
+                        <h1>User Profile</h1>
+                        <p>Username: {profileState.username}</p>
+                        <p>Number of Followers: {profileState.followerCount}</p>
+                        <p>Followers: {profileState.followers.map(
+                            follower => <p>{follower.name} <button className='tableButton'
+                                onClick={() => history.push(`/me/profile`)}>View Profile</button></p>)}</p>
+                        <p>User Reviews: {profileState.recommendations.map(review => <p>{review.name}</p>)}</p>
+                    </div>
+                </div>
+            </div>);
+    } else { // User is not logged in, meaning that profileState is null
         const handleSignIn = () => {
             history.push('/signin');
         }
@@ -84,7 +178,7 @@ function Profile(props) {
                     <h1>Profile</h1>
                     <div>
                         <p>Sorry, you must be logged in to use this feature.</p>
-                        <button classname='formFieldButton'
+                        <button className='formFieldButton'
                             onClick={() => handleSignIn()}
                         >
                             Sign In
@@ -97,3 +191,4 @@ function Profile(props) {
 }
 
 export default Profile;
+
