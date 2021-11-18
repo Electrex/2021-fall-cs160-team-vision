@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './style.css';
 
@@ -136,6 +136,42 @@ function Profile(props) {
                 <div className='appForm'>
                     <div>
                         <h1>Profile</h1>
+                        <div className='pageSwitcherShort'>
+                    <NavLink
+                        to='/users'
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
+                    >
+                        Find Users
+                    </NavLink>
+                    <NavLink
+                        to='/me'
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
+                    >
+                        Following
+                    </NavLink>
+                    <NavLink
+                        to='/me/profile'
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
+                    >
+                        Profile
+                    </NavLink>
+                    <NavLink
+                        to="/me/reviews"
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
+                    >
+                        Manage Reviews
+                    </NavLink>
+                    <button 
+                        onClick={() => props.history.goBack()} 
+                        className='pageSwitcherItem'
+                    >
+                        Go Back
+                    </button>
+                    </div>
                         <button className='formFieldButton'
                             onClick={() => handleFollow(token, userID)}
                         >
@@ -157,6 +193,42 @@ function Profile(props) {
                 <div className='appForm'>
                     <div>
                         <h1>User Profile</h1>
+                        <div className='pageSwitcherShort'>
+                    <NavLink
+                        to='/users'
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
+                    >
+                        Find Users
+                    </NavLink>
+                    <NavLink
+                        to='/me'
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
+                    >
+                        Following
+                    </NavLink>
+                    <NavLink
+                        to='/me/profile'
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
+                    >
+                        Profile
+                    </NavLink>
+                    <NavLink
+                        to="/me/reviews"
+                        activeClassName='pageSwitcherItem-active'
+                        className='pageSwitcherItem'
+                    >
+                        Manage Reviews
+                    </NavLink>
+                    <button 
+                        onClick={() => props.history.goBack()} 
+                        className='pageSwitcherItem'
+                    >
+                        Go Back
+                    </button>
+                    </div>
                         <p>Username: {profileState.username}</p>
                         <p>Number of Followers: {profileState.followerCount}</p>
                         <p>Followers: {profileState.followers.map(

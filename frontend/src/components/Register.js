@@ -92,7 +92,7 @@ function Register(props) {
   const handleRegister = async (e) => {
     if (await register(e)){
       if(await createProfile(e)){
-        props.history.push('/me')
+        props.history.push('/me/profile')
       }
       else{
         setEmail(initialState.email);
