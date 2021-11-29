@@ -9,3 +9,4 @@
 ## Conventions
 - Use descriptive names for branches formatted using dashes
 > descriptive-branch-name-example
+- Create a pull request and have the code reviewed and merged by another member of the team
