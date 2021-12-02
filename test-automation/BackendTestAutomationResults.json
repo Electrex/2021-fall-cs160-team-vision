@@ -1,0 +1,364 @@
+{
+	"id": "35421b63-db5d-48c5-ac00-782855d31d45",
+	"name": "Test Automation",
+	"timestamp": "2021-11-18T00:17:06.297Z",
+	"collection_id": "17262908-3d2a7b52-ac62-4c2b-addd-03c5fe2abcc8",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 16,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "e9249c80-49c6-4a9f-bbff-f69439f778fe",
+			"name": "Register api/users (Register user incorrect password) FAIL",
+			"url": "http://localhost:6969/api/users",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"register user with invalid password requirements should FAIL": true,
+				"Registeration should return an error message": true
+			},
+			"testPassFailCounts": {
+				"register user with invalid password requirements should FAIL": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Registeration should return an error message": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"register user with invalid password requirements should FAIL": true,
+					"Registeration should return an error message": true
+				}
+			]
+		},
+		{
+			"id": "0c6795b5-111e-4cd6-8895-ea8a621df87d",
+			"name": "Register api/users (Register user incorrect password) FAIL Copy",
+			"url": "http://localhost:6969/api/users",
+			"time": 3,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"register user with invalid password requirements should FAIL": true,
+				"Registeration should return an error message": true
+			},
+			"testPassFailCounts": {
+				"register user with invalid password requirements should FAIL": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Registeration should return an error message": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"register user with invalid password requirements should FAIL": true,
+					"Registeration should return an error message": true
+				}
+			]
+		},
+		{
+			"id": "ad272a53-dc88-43d3-a72b-dd4fc094684c",
+			"name": "Register api/users PASS",
+			"url": "http://localhost:6969/api/users",
+			"time": 230,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Registeration should PASS": true,
+				"Registeration should return a token": true
+			},
+			"testPassFailCounts": {
+				"Registeration should PASS": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Registeration should return a token": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				230
+			],
+			"allTests": [
+				{
+					"Registeration should PASS": true,
+					"Registeration should return a token": true
+				}
+			]
+		},
+		{
+			"id": "f6382fea-923d-4e89-80c6-c3865f11ab13",
+			"name": "Create api/profile PASS",
+			"url": "http://localhost:6969/api/profile",
+			"time": 163,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Profile creation for current user should PASS": true
+			},
+			"testPassFailCounts": {
+				"Profile creation for current user should PASS": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				163
+			],
+			"allTests": [
+				{
+					"Profile creation for current user should PASS": true
+				}
+			]
+		},
+		{
+			"id": "9bec654e-8c2e-491e-978d-d47ae913e8ae",
+			"name": "POST api/auth (Login user) FAIL",
+			"url": "http://localhost:6969/api/auth",
+			"time": 138,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"authorization check should FAIL": true
+			},
+			"testPassFailCounts": {
+				"authorization check should FAIL": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				138
+			],
+			"allTests": [
+				{
+					"authorization check should FAIL": true
+				}
+			]
+		},
+		{
+			"id": "530ddac5-aa1e-49f5-abe8-8745f6e35100",
+			"name": "POST api/auth (Login user) PASS",
+			"url": "http://localhost:6969/api/auth",
+			"time": 138,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"authorization check should PASS": true,
+				"Login should return a token": true
+			},
+			"testPassFailCounts": {
+				"authorization check should PASS": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Login should return a token": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				138
+			],
+			"allTests": [
+				{
+					"authorization check should PASS": true,
+					"Login should return a token": true
+				}
+			]
+		},
+		{
+			"id": "3b8501db-b3dd-4933-b73f-09883521cadd",
+			"name": "GET api/users/myID (PASS)",
+			"url": "http://localhost:6969/api/users/myID",
+			"time": 2,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Registeration should PASS": true,
+				"Registeration should return the user ID": true
+			},
+			"testPassFailCounts": {
+				"Registeration should PASS": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Registeration should return the user ID": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Registeration should PASS": true,
+					"Registeration should return the user ID": true
+				}
+			]
+		},
+		{
+			"id": "5c7b36f0-b71b-4e60-893a-01b4e98f2c6e",
+			"name": "Create Review FAIL (Unauthorized)",
+			"url": "http://localhost:6969/api/review",
+			"time": 2,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"authorization check should FAIL": true
+			},
+			"testPassFailCounts": {
+				"authorization check should FAIL": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"authorization check should FAIL": true
+				}
+			]
+		},
+		{
+			"id": "a47557f0-583e-47b3-9f42-f9680c87d998",
+			"name": "Create Review FAIL (Invalid input)",
+			"url": "http://localhost:6969/api/review",
+			"time": 3,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"authorization check should FAIL": true
+			},
+			"testPassFailCounts": {
+				"authorization check should FAIL": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"authorization check should FAIL": true
+				}
+			]
+		},
+		{
+			"id": "41738b4e-2bee-499c-8b15-67c5737a1a1c",
+			"name": "Create Review PASS",
+			"url": "http://localhost:6969/api/review",
+			"time": 246,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"authorization check should PASS": true,
+				"Successful review creation should return the review object in confirmation": true
+			},
+			"testPassFailCounts": {
+				"authorization check should PASS": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Successful review creation should return the review object in confirmation": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				246
+			],
+			"allTests": [
+				{
+					"authorization check should PASS": true,
+					"Successful review creation should return the review object in confirmation": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 931,
+	"collection": {
+		"requests": [
+			{
+				"id": "e9249c80-49c6-4a9f-bbff-f69439f778fe",
+				"method": "POST"
+			},
+			{
+				"id": "0c6795b5-111e-4cd6-8895-ea8a621df87d",
+				"method": "POST"
+			},
+			{
+				"id": "ad272a53-dc88-43d3-a72b-dd4fc094684c",
+				"method": "POST"
+			},
+			{
+				"id": "f6382fea-923d-4e89-80c6-c3865f11ab13",
+				"method": "POST"
+			},
+			{
+				"id": "9bec654e-8c2e-491e-978d-d47ae913e8ae",
+				"method": "POST"
+			},
+			{
+				"id": "530ddac5-aa1e-49f5-abe8-8745f6e35100",
+				"method": "POST"
+			},
+			{
+				"id": "3b8501db-b3dd-4933-b73f-09883521cadd",
+				"method": "GET"
+			},
+			{
+				"id": "5c7b36f0-b71b-4e60-893a-01b4e98f2c6e",
+				"method": "POST"
+			},
+			{
+				"id": "a47557f0-583e-47b3-9f42-f9680c87d998",
+				"method": "POST"
+			},
+			{
+				"id": "41738b4e-2bee-499c-8b15-67c5737a1a1c",
+				"method": "POST"
+			}
+		]
+	}
+}
