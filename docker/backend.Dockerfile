@@ -7,12 +7,12 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install Dependencies
-COPY package*.json ./
+COPY ../../package*.json ./
 
 RUN npm install --silent
 
 # Copy app source code
-COPY . .
+COPY ../../ .
 
 # Exports
 EXPOSE 6969

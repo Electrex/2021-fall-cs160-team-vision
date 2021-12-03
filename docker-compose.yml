@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./docker/backend.Dockerfile
     image: agora-node-server
     container_name: agora-node-server
     command: npm start
@@ -14,8 +14,8 @@ services:
       - app-network
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./docker/frontend.Dockerfile
     image: agora-react-client
     container_name: agora-react-client
     command: npm start
@@ -23,7 +23,7 @@ services:
       - ./client/:/usr/app
       - /usr/app/node_modules
     depends_on:
-      - server
+      - backend
     ports:
       - "3000:3000"
     networks:
