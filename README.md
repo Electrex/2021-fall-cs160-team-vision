@@ -1,7 +1,7 @@
 # 2021-fall-cs160-team-vision
 ## Installation for development
 1. Clone repository and open code in IDE
-2. Use `docker-compose build` to set up images in **root**
+2. Use `docker-compose build` in **root** to set up images
 3. Use `docker-compose up` to run
 
 *From here going to localhost:3000 will bring you to app*
