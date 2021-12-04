@@ -4,7 +4,7 @@
 2. Use `docker-compose build` in **root** to set up images
 3. Use `docker-compose up` to run
 
-*From here going to localhost:3000 will bring you to app*
+*From here going to localhost:3000 in web browser will bring you to app*
 
 ## Conventions
 - Use descriptive names for branches formatted using dashes
