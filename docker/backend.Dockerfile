@@ -14,6 +14,8 @@ RUN npm install --silent
 # Copy app source code
 COPY ../../ .
 
+RUN sed -i "s|\"use strict\";|\"use strict\";\nconst {TextDecoder, TextEncoder} = require(\"util\"); |g" /usr/src/app/node_modules/whatwg-url/lib/encoding.js
+
 # Exports
 EXPOSE 6969
 
