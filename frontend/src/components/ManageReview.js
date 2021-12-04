@@ -6,8 +6,19 @@ function ManageReview(props) {
     const history = useHistory();
     const [data, setData] = useState("");
     const getAllData = () => {
+
+        // const config = {
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       'x-auth-token': sessionStorage.getItem('agora_token')
+        //     }
+        //   }
+          
+        // const res = await axios.get('/api/users/myID', config);
+        // const id = res.id;
+
         axios
-            .get("/api/review")
+            .get(`/api/review/`)
             .then((response) => {
                 console.log(response.data);
                 setData(response.data);
@@ -16,8 +27,8 @@ function ManageReview(props) {
                 console.log(error);
             });
     };
-    useEffect(() => {
-        getAllData();
+    useEffect(async () => {
+        await getAllData();
     }, []);
     const displayData = () => {
         return data ? (

@@ -35,7 +35,7 @@ function LandingPage(props) {
                 <h3>The site to use for shoppers who are looking for recommendations from trusted reviewers.</h3>
                 <p>To learn more about our vision, <a style={{color: '#ADD8E6'}} onClick={() => routeChange('/about')}>click here!</a></p>
                 <hr/>
-                <p>Things below the hr tag is just for development to make things easier for people to view the page they are editing.</p>
+                {/* <p>Things below the hr tag is just for development to make things easier for people to view the page they are editing.</p>
                 <button onClick={() => routeChange('/')}>LandingPage</button>
                 <button onClick={() => routeChange('/me')}>UserLanding</button>
                 <button onClick={() => routeChange('/me/profile')}>Profile</button>
@@ -44,7 +44,7 @@ function LandingPage(props) {
                 <button onClick={() => routeChange('/signin')}>SignIn</button>
                 <button onClick={() => routeChange('/signup')}>Register</button>
                 <button onClick={() => routeChange('/users')}>UserList</button>
-                <button onClick={() => routeChange('/about')}>About</button>
+                <button onClick={() => routeChange('/about')}>About</button> */}
             </div>
         </div>
     );

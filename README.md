@@ -1,10 +1,10 @@
 # 2021-fall-cs160-team-vision
 ## Installation for development
-1. Open project in Visual Studio
-2. Use `npm install` to set up node in **root and frontend**
-3. Use `npm run dev` to run
+1. Clone repository and open code in IDE
+2. Use `docker-compose build` in **root** to set up images
+3. Use `docker-compose up` to run
 
-*This should launch the browser and the webpage will open*
+*From here going to localhost:3000 in web browser will bring you to app*
 
 ## Conventions
 - Use descriptive names for branches formatted using dashes
