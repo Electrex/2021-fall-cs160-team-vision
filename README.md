@@ -1,4 +1,4 @@
-# 2021-fall-cs160-team-vision
+# Agora
 ## Installation for development
 1. Clone repository and open code in IDE
 2. Use `docker-compose build` in **root** to set up images
